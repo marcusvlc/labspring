@@ -2,11 +2,15 @@ package br.com.fabricadeprogramador.ws.model;
 
 
 
+import java.util.ArrayList;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Cliente_Tabela")
 public class Cliente {
 	
 	@Id
@@ -15,12 +19,19 @@ public class Cliente {
 	private String login;
 	private String senha;
 	private String email;
+	private ArrayList<Artista> artistas;
 	
-	public Cliente(Integer id, String login, String senha, String email) {
-		this.id = id;
-		this.login = login;
-		this.senha = senha;
-		this.email = email;
+	
+	public Cliente() {
+
+	}
+	
+	public ArrayList<Artista> getArtistas() {
+		return artistas;
+	}
+
+	public void setArtistas(ArrayList<Artista> artistas) {
+		this.artistas = artistas;
 	}
 	
 	public String getSenha() {
