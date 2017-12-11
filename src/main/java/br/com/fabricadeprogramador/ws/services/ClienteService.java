@@ -28,7 +28,7 @@ public class ClienteService {
 		clienteRepository.delete(cliente);
 	}
 	
-	public Cliente buscarPorId(Integer id) {
+	public Cliente buscarPorId(Long id) {
 		return clienteRepository.findOne(id);
 	}
 	

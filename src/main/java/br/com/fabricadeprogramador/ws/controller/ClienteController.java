@@ -37,7 +37,7 @@ public class ClienteController {
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/clientes/{id}" )
-	public ResponseEntity<Cliente> excluirCliente(@PathVariable Integer id) {
+	public ResponseEntity<Cliente> excluirCliente(@PathVariable Long id) {
 		
 		Cliente clienteEncontrado = clienteService.buscarPorId(id);
 		if (clienteEncontrado==null){

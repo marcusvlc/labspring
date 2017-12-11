@@ -16,18 +16,18 @@ app.controller("controlePrincipal",
 		$scope.albumDaVez = {nome: "", imagem: "", ano: "", musicas:[], dono:""};
 		$scope.musicaDaVez = {nome: "", albumNome:"", ano: "", duracao:""};
 		$scope.playlistDaVez = {nome:"", musicas:[]};
-		
-		///////////////////////
-		
 		$scope.clientes = [];
-		$scope.clienteLogado = todoListService.clienteLogado;
+		$scope.clienteLogado = {};
 			
+		
+		
 			$http({method:'GET', url:'http://localhost:8080/clientes'})
 			.then(function(resposta){
 				$scope.clientes = resposta.data;
+				console.log("Fez corretamente");
 				
 			}, function(resposta){
-
+				console.log("Deu erro");
 			});
 			
 		
@@ -45,18 +45,22 @@ app.controller("controlePrincipal",
 		
 		
 		$scope.fazerLogin = function(usuario, senha) {
+			var logou = false;
 			for (i = 0; i < $scope.clientes.length; i++) { 
 			    if(usuario == $scope.clientes[i].login) {
 			    	if(senha == $scope.clientes[i].senha) {
 			    		$scope.clienteLogado = $scope.clientes[i];
+			    		logou = true;
 			    		window.location.href = 'http://www.localhost:8080/index';
 			    		break;
 			    	}
 			    }
 			}
+			
+			if(logou = false) {
+				Materialize.toast("Alguma informação está incorreta, tente novamente!");
+			}
 		}
-		
-		///////////////////
 		
 
 		$scope.removerMusicaPlaylist = function(Playlist, Musica) {
@@ -424,5 +428,6 @@ app.controller("controlePrincipal",
 		init();
 
 	});
+
 
 

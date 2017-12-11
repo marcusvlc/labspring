@@ -4,10 +4,12 @@ var app = angular.module('sistema',['ui.router']);
 // Factory que guarda as informações globalmente, nao deixando resetar ao mudar entre rotas.
 app.factory('todoListService', function() {
     var clienteLogado = {};
+    var clientes = [];
 
 
   return {
-    clienteLogado: clienteLogado
+    clienteLogado: clienteLogado,
+    clientes: clientes
 
   };
 });

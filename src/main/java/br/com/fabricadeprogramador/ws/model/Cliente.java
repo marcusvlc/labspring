@@ -2,11 +2,12 @@ package br.com.fabricadeprogramador.ws.model;
 
 
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,22 +16,24 @@ public class Cliente {
 	
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	private String login;
 	private String senha;
 	private String email;
-	private ArrayList<Artista> artistas;
+	
+	@OneToMany(mappedBy="cliente")
+	private List<Artista> artistas;
 	
 	
 	public Cliente() {
 
 	}
 	
-	public ArrayList<Artista> getArtistas() {
+	public List<Artista> getArtistas() {
 		return artistas;
 	}
 
-	public void setArtistas(ArrayList<Artista> artistas) {
+	public void setArtistas(List<Artista> artistas) {
 		this.artistas = artistas;
 	}
 	
@@ -47,10 +50,10 @@ public class Cliente {
 		this.email = email;
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getLogin() {
