@@ -1,0 +1,39 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="css/favoritos.css">
+</head>
+
+
+<h3>Artistas Favoritos</h3>
+
+<h6>Aqui está uma lista dos seus artistas favoritos. Os mesmos aparecerão marcados com uma estrela dourada na página inicial.</h6>
+
+<main class="container">
+	
+<table class="bordered">
+
+<thead>
+  <tr>
+    <th>Nome</th>
+    <th>Foto do Artista</th>
+    <th>Comentário sobre o artista</th>
+    <th>Nota do Artista</th>
+    <th>Álbuns do Artista</th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr ng-repeat="i in artistasFavoritados | filter:buscado">
+    <td>{{i.nome}}</td>
+    <td ng-click="abreListarAlbuns(i)"><img class="circle" alt="Imagem inválida" src="{{i.imagem}}" width="100" height="100"></td>
+    <td>{{i.comentario}}</td>
+    <td>{{i.nota}}</td>
+    <td>
+			 <ul>
+			  <li ng-repeat="j in i.albuns">{{j.nome}}</li>
+			</ul> 
+    </td>
+  </tr>
+</tbody>
+</table>
+
+</main>

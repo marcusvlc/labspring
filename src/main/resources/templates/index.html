@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="sistema">
+<head >
+<title>Sistema Angular</title>
+<meta charset="utf-8"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="./js/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+<script src="./js/angular-route.min.js"></script>
+<script src="./js/angular-ui-router.js"></script>
+<script src="./js/init.js"> </script>
+<script src="./js/app/app.js"></script>
+<script src="./js/app/controllers.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"/>
+<link rel="stylesheet" type="text/css" href="./css/estilo.css"/>
+<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet"/>
+</head>
+<body>
+
+<div ng-include="'./paginas/_nav.html'"></div>
+
+<header class="container">
+
+<div class="row">
+<h2>Sistema de Música</h2>
+</div>
+
+</header>
+
+<div ui-view="">
+
+
+</div>
+
+
+
+
+
+</body>
+
+<footer class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text">Informações sobre o site</h5>
+        <p class="grey-text text-lighten-4">Site desenvolvido por Marcus Vinicius, estudante da UFCG.<br/> Tecnologias utilizadas: HTML 5, CSS 3, Angular 1.6 e Javascript. <br/> Alguns recursos visuais do <a href="http://materializecss.com/">Materialize</a> foram utilizados na construção do site.</p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <h5 class="white-text">Links de Contato</h5>
+        <ul>
+          <li><a class="grey-text text-lighten-3" target="_blank" href="https://www.facebook.com/M.Vinicius.Tpv">- Facebook</a></li>
+          <li><a class="grey-text text-lighten-3" target="_blank" href="https://github.com/marcusvlc">- GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+    © 2017 by: Marcus Vinicius
+    </div>
+  </div>
+</footer>
+</html>

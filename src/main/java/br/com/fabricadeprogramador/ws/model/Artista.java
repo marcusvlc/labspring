@@ -8,12 +8,21 @@ public class Artista implements Serializable {
 
 	private String nome;
 	private String imagem;
+	private Integer nota;
 	private String comentario;
 	private boolean ehFavorito;
 	private String ultimaMusicaOuvida;
 	
 	public Artista() {
 		
+	}
+	
+	public Integer getNota() {
+		return nota;
+	}
+
+	public void setNota(Integer nota) {
+		this.nota = nota;
 	}
 	
 	public String getNome() {

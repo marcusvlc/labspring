@@ -1,0 +1,118 @@
+<head>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="lib/angular/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+<script src="lib/angular/angular-route.min.js"></script>
+<script src="lib/angular/angular-ui-router.js"></script>
+<script src="lib/angular/angular-local-storage.min.js"></script>
+ <!-- Latest compiled and minified CSS -->
+<script src="./js/init.js"> </script>
+<script type="text/javascript"></script>
+<script src="./js/app/app.js"></script>
+<script src="./js/app/controllers.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="./css/estilo.css">
+<link rel="stylesheet" type="text/css" href="css/playlists.css">
+<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet"> 
+</head>
+
+<h3>PlayLists</h3>
+<h6>Aqui está uma lista das suas playlists. Você pode sempre criar novas playlists e adicionar músicas as mesmas.</h6>
+<h6>Você só poderá adicionar uma música a uma playlist caso a música esteja cadastrada no sistema. Para cadastrar uma música vá a página inicial</h6>
+<br>
+<main class="container">
+
+<div class="row">
+	 <a ng-click="abrirModalPlaylist()" class="waves-effect waves-light btn">+ Adicionar PlayList</a>
+ </div>
+
+ <table class="bordered">
+
+<thead>
+  <tr>
+  	<th>     </th>
+    <th>Nome da PlayList</th>
+    <th>Músicas da PlayList</th>
+    <th>Ação</th>
+  </tr>
+</thead>
+<tbody>
+  <tr ng-repeat="i in playlistsCadastradas">
+   <td><img class="circle" alt="Imagem inválida" src="img/playlist.png" width="100" height="100"></td>
+    <td>{{i.nome}}</td>
+    <td>
+		 <ul>
+		  <li ng-repeat="j in i.musicas">{{j.nome}}  <i ng-click="removerMusicaPlaylist(i, j)" class="material-icons">remove_circle</i></li>
+		</ul> 
+    </td>
+
+    <td><button ng-click="removerPlayList(i)" class="btn red">Remover PlayList</button>
+    	<button ng-click="abrirModalMusicaPlayList(i)" class="btn green"><i class="material-icons">music_video</i></button>
+    </td>
+
+  </tr>
+</tbody>
+</table>
+
+
+
+<div id="modalplaylists" class="modal modal-fixed-footer">
+<div class="modal-content">
+<h4>↪ Adicionar uma PlayList no sistema!</h4>
+<p>Preencha todas as informações para cadastrar uma playlist no sistema!</p>
+
+<div class="row">
+    <div class="input-field col m6 s6">
+    <a>Nome da PlayList<a>
+  <input type="text" ng-modeL="Playlist.nome" class="validate" maxlength="30">
+</div>
+
+</div>
+</div>
+<div class="modal-footer">
+<a  class="modal-action modal-close waves-effect waves-green btn gray">Cancelar</a>
+
+   <a ng-click="cadastrarPlayList(Playlist)" class="waves-effect waves-light btn blue">Cadastrar</a>
+</div>
+</div>
+
+
+<div id="modaladdmusicaplaylist" class="modal modal-fixed-footer">
+<div class="modal-content">
+<h4>↪ Adicionar uma música na Playlist</h4>
+<p>Aqui estão listadas todas as músicas do sistema, basta escolher uma e clicar em confirmar para adiciona-la em sua playlist!</p>
+<p>Ao clicar em confirmar a música selecionada irá ser adicionada em sua playlist, você pode removê-la depois caso queira!</p>
+
+<div class="row">
+    <div class="input-field col m6 s6">
+    <a>Músicas disponíveis<a>
+    	<br>
+  	    <a class='dropdown-button btn red' data-activates='dropdown4'>Selecione a Música!</a>
+  	    <br>
+  	    <br>
+  	    <a>Você selecionou a música: {{musicaDaVez.nome}}</a>
+  	    <br>
+  	    <br>
+  <!-- Dropdown Structure -->
+  <ul id='dropdown4' class='dropdown-content'>
+    <li ng-repeat="x in musicasCadastradas" ng-click="setMusicaDaVez(x)"><a>{{x.nome}}</a></li>
+  </ul>
+</div>
+
+</div>
+</div>
+<div class="modal-footer">
+
+<a  ng-click="resetMusicaDaVez()" class="modal-action modal-close waves-effect waves-green btn gray">Cancelar</a>
+
+   <a ng-click="addMusicaNaPlaylist()" class="waves-effect waves-light btn blue">Confirmar</a>
+</div>
+</div>
+
+ </main>

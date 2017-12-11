@@ -1,0 +1,38 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="css/playlists.css">
+</head>
+
+<h3>Álbuns</h3>
+<h6>Aqui está uma lista de todos os álbuns cadastrados no sistema!</h6>
+<h6>Caso você queira adicionar novos álbuns vá para a página inicial e clique em "Adicionar Álbum"</h6>
+
+<main class="container">
+
+<table class="bordered">
+
+<thead>
+  <tr>
+  	<th>Capa do Álbum</th>
+    <th>Nome do Álbum</th>
+    <th>Ano de lançamento</th>
+    <th>Músicas do Álbum</th>
+    <th>Artista dono do álbum</th>
+  </tr>
+</thead>
+<tbody>
+  <tr ng-repeat="i in albunsCadastrados">
+   <td><img class="circle" alt="Imagem inválida" src="{{i.imagem}}" width="100" height="100"></td>
+    <td>{{i.nome}}</td>
+    <td>{{i.ano}}</td>
+    <td>
+        <ul>
+            <li ng-repeat="j in i.musicas">{{j.nome}}</li>
+        </ul>
+    </td>
+    <td>{{i.dono}}</td>
+
+  </tr>
+</tbody>
+</table>
+
+</main>

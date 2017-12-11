@@ -1,0 +1,34 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="css/playlists.css">
+</head>
+
+<h3>Músicas</h3>
+<h6>Aqui está uma lista de todas as músicas que estão cadastradas no sistema!</h6>
+<h6>Caso você queira adicionar novas músicas vá até a página inicial e clique no botão "Adicionar Música"</h6>
+
+<main class="container">
+	
+<table class="bordered">
+
+<thead>
+  <tr>
+  	<th>     </th>
+    <th>Nome da Música</th>
+    <th>Álbum que a música pertence</th>
+    <th>Duração</th>
+    <th>Ano de lançamento</th>
+  </tr>
+</thead>
+<tbody>
+  <tr ng-repeat="i in musicasCadastradas">
+   <td><img alt="Imagem inválida" src="img/musicaslistadas.png" width="100" height="100"></td>
+    <td>{{i.nome}}</td>
+    <td>{{i.albumNome}}</td>
+    <td>{{i.duracao}}</td>
+    <td>{{i.ano}}</td>
+
+  </tr>
+</tbody>
+</table>
+
+</main>

@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+li i {
+	cursor: pointer;
+}
+
+ h6 {
+ 	font-size: 14px;
+ 	text-align: center;
+ 	color: #A9A9A9;
+ }

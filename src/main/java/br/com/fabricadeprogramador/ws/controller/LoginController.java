@@ -10,5 +10,11 @@ public class LoginController {
 	public String irParaLogin() {
 		return "login";
 	}
+	
+	@RequestMapping("/index")
+	public String irParaIndex() {
+		return "index";
+	}
+	
 
 }
