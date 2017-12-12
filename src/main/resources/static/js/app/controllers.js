@@ -24,10 +24,10 @@ app.controller("controlePrincipal",
 			$http({method:'GET', url:'http://localhost:8080/clientes'})
 			.then(function(resposta){
 				$scope.clientes = resposta.data;
-				console.log("Fez corretamente");
+				console.log("Fez corretamente o GET");
 				
 			}, function(resposta){
-				console.log("Deu erro");
+				console.log("Fez erroneamente o GET");
 			});
 			
 		
@@ -35,11 +35,11 @@ app.controller("controlePrincipal",
 			$http.put('http://localhost:8080/clientes', JSON.stringify(Cliente)).then(
 				
 				function (response) {
-					console.log("Deu bom");
+					console.log("Deu bom o PUT");
 				}, 
 				
 				function (response) {
-					console.log("Deu ruim");
+					console.log("Deu ruim o PUT");
 				});
 		}
 		
@@ -51,7 +51,9 @@ app.controller("controlePrincipal",
 			    	if(senha == $scope.clientes[i].senha) {
 			    		$scope.clienteLogado = $scope.clientes[i];
 			    		logou = true;
-			    		window.location.href = 'http://www.localhost:8080/index';
+			    		$scope.clienteLogado.estaLogado = true;
+			    		$scope.alterarCliente($scope.clienteLogado);
+			    		window.location.href = 'http://localhost:8080/index#!/home';
 			    		break;
 			    	}
 			    }

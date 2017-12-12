@@ -32,7 +32,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         var homeState = {
           name: 'home',
           url: '/home',
-          templateUrl: './paginas/home.html',
+          templateUrl: 'paginas/home.html',
           controller: 'controlePrincipal',
         };
         var playlistsState = {

@@ -2,6 +2,7 @@
 <html lang="pt-br" ng-app="sistema">
 <head>
   <meta charset="UTF-8"/>
+  <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
 <script src="./js/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
 <script src="./js/angular-route.min.js"></script>
@@ -24,6 +25,8 @@
         <input type="password" ng-model="senha" name="p" placeholder="Password" required="required" />
         <button type="submit" class="btn btn-primary btn-block btn-large" ng-click="fazerLogin(usuario, senha)">Entrar</button>
 		{{clientes}}
+		{{clienteLogado}}
+
 
     </form>
 </div>

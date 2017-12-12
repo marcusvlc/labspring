@@ -20,6 +20,7 @@ public class Cliente {
 	private String login;
 	private String senha;
 	private String email;
+	private boolean estaLogado;
 	
 	@OneToMany(mappedBy="cliente")
 	private List<Artista> artistas;
@@ -29,6 +30,14 @@ public class Cliente {
 
 	}
 	
+	public boolean getEstaLogado() {
+		return estaLogado;
+	}
+	
+	public void setEstaLogado (boolean estaLogado) {
+		this.estaLogado = estaLogado;
+	}
+ 	
 	public List<Artista> getArtistas() {
 		return artistas;
 	}
