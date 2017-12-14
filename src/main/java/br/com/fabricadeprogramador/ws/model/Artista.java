@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Artista implements Serializable {
 
@@ -25,6 +27,7 @@ public class Artista implements Serializable {
 	private boolean ehFavorito;
 	private String ultimaMusicaOuvida;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="Cliente_id")
 	private Cliente cliente;

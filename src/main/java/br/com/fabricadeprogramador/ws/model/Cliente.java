@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="Cliente_Tabela")
 public class Cliente {
@@ -22,6 +24,7 @@ public class Cliente {
 	private String email;
 	private boolean estaLogado;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="cliente")
 	private List<Artista> artistas;
 	

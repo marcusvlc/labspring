@@ -17,7 +17,7 @@ app.controller("controlePrincipal",
 		$scope.musicaDaVez = {nome: "", albumNome:"", ano: "", duracao:""};
 		$scope.playlistDaVez = {nome:"", musicas:[]};
 		$scope.clientes = [];
-		$scope.clienteLogado = {};
+		$scope.user = {};
 			
 		
 		
@@ -44,24 +44,19 @@ app.controller("controlePrincipal",
 		}
 		
 		
-		$scope.fazerLogin = function(usuario, senha) {
-			var logou = false;
-			for (i = 0; i < $scope.clientes.length; i++) { 
-			    if(usuario == $scope.clientes[i].login) {
-			    	if(senha == $scope.clientes[i].senha) {
-			    		$scope.clienteLogado = $scope.clientes[i];
-			    		logou = true;
-			    		$scope.clienteLogado.estaLogado = true;
-			    		$scope.alterarCliente($scope.clienteLogado);
-			    		window.location.href = 'http://localhost:8080/index#!/home';
-			    		break;
-			    	}
-			    }
-			}
+		$scope.fazerLogin = function(Cliente) {
+			$scope.user = Cliente;
 			
-			if(logou = false) {
-				Materialize.toast("Alguma informação está incorreta, tente novamente!");
-			}
+			$http.post("http://localhost:8080/autenticar", $scope.user)
+			.then(function(resposta){
+				console.log("Sucesso " + resposta);
+				
+			}, function(resposta){
+				console.log("Falha " + resposta);
+				
+			});
+			
+			
 		}
 		
 

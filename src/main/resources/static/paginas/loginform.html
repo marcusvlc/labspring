@@ -1,0 +1,36 @@
+<head>
+<script src="./js/init.js"> </script>
+<script src="./js/app/app.js"></script>
+<script src="./js/app/controllers.js"></script>
+<style>
+#divlogin {
+width: 300px;
+margin-left: 35%;
+margin-top: 3%;
+}
+
+a {
+float: center;
+margin-bottom: 3%;
+
+}
+
+
+</style>
+</head>
+
+<div id="divlogin">
+		<main class="container">
+			  <label>Login</label>
+			  <input ng-model="Cliente.login" type="text" name="firstname"><br>
+			  <label>Senha</label>
+			  <input ng-model="Cliente.senha" type="password" name="lastname">
+			  <br/>
+			  <a ng-click="fazerLogin(Cliente)" class="waves-effect waves-light btn">Entrar</a>
+			  <a class="waves-effect waves-light btn red">Registrar</a>
+			  <br/>
+			  {{Cliente.login}}
+			  {{Cliente.senha}}
+		</main>
+
+</div>

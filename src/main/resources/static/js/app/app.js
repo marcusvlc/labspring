@@ -20,12 +20,12 @@ app.factory('todoListService', function() {
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/loginform');
     	
-    var indexState = {
-            name: 'index',
-            url: '/index',
-            templateUrl: 'templates/index.html',
+    var loginState = {
+            name: 'loginform',
+            url: '/loginform',
+            templateUrl: 'paginas/loginform.html',
             controller: 'controlePrincipal',
       };
     	
@@ -68,7 +68,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         $stateProvider.state(favoritosState);
         $stateProvider.state(musicasState);
         $stateProvider.state(albunsState);
-        $stateProvider.state(indexState);
+        $stateProvider.state(loginState);
 
 
     });
