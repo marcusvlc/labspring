@@ -5,7 +5,6 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.fabricadeprogramador.ws.model.Artista;
 import br.com.fabricadeprogramador.ws.model.Usuario;
 import br.com.fabricadeprogramador.ws.repository.UsuarioRepository;
 
@@ -30,6 +29,10 @@ public class UsuarioService {
 	
 	public Usuario buscarPorId(Long id) {
 		return usuarioRepository.findOne(id);
+	}
+
+	public Usuario alterar(Usuario usuario) {
+		return usuarioRepository.save(usuario);
 	}
 
 }

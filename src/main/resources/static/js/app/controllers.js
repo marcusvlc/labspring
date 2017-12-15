@@ -16,12 +16,12 @@ app.controller("controlePrincipal",
 		$scope.albumDaVez = {nome: "", imagem: "", ano: "", musicas:[], dono:""};
 		$scope.musicaDaVez = {nome: "", albumNome:"", ano: "", duracao:""};
 		$scope.playlistDaVez = {nome:"", musicas:[]};
-		$scope.clientes = [];
+		$scope.usuariosCadastrados = [];
 		$scope.user = localStorage.getItem("userData");
 		
-		$http({method:'GET', url:'http://localhost:8080/clientes'})
+		$http({method:'GET', url:'http://localhost:8080/usuarios'})
 			.then(function(resposta){
-				$scope.clientes = resposta.data;
+				$scope.usuariosCadastrados = resposta.data;
 				console.log("Fez corretamente o GET");
 				
 			}, function(resposta){
@@ -44,7 +44,18 @@ app.controller("controlePrincipal",
 				
 			});
 			
-			
+		}
+		
+		$scope.atualizarUsuario = function(Usuario) {
+			$http.put('http://localhost:8080/usuarios', JSON.stringify(Cliente)).then(
+				
+				function (response) {
+					console.log("Deu bom o PUT");
+				}, 
+				
+				function (response) {
+					console.log("Deu ruim o PUT");
+				});
 		}
 		
 
@@ -264,15 +275,15 @@ app.controller("controlePrincipal",
 		}
 
 		$scope.addArtista = function(Artista) {
-			checagem(Artista);
 			if(Artista.nome == "") {
 				Materialize.toast('Alguma informação está incorreta, verifique e tente novamente!', 2000)
 				limparFormulario();
 			} else {
-					if($scope.artistaExisteNoSistema == false) {
-					$scope.artistasCadastrados.push(Artista);
+					if(artistaJaEstaCadastrado(Artista) == false) {
+					$scope.user.artistas.push(Artista);
 					$('#modal1').modal('close');
   					Materialize.toast('Dados Salvos com sucesso!', 1000) // Tempo esta em ms
+  					$scope.atualizarUsuario($scope.user);
 					limparFormulario();
 				} else {
 					Materialize.toast('O artista já existe no sistema, tente novamente!', 2000) // Tempo esta em ms
@@ -374,11 +385,10 @@ app.controller("controlePrincipal",
 		}
 
 		$scope.salvarArtista = function(Artista) {
-			checagem(Artista);
 			if(Artista.nome == "") {
 				Materialize.toast('Alguma informação está incorreta, verifique e tente novamente!', 2000)
 			} else {
-					if($scope.artistaExisteNoSistema == false || Artista.nome == artistaEditado.nome) {
+					if(artistaJaEstaCadastrado(Artista) == false || Artista.nome == artistaEditado.nome) {
 						artistaEditado.nome = Artista.nome;
 						artistaEditado.imagem = Artista.imagem;
 						artistaEditado.comentario = Artista.comentario;
@@ -400,14 +410,18 @@ app.controller("controlePrincipal",
 
 		};
 
-		var checagem = function(Artista) {
-			for (var i = $scope.artistasCadastrados.length - 1; i >= 0; i--) {
-				if($scope.artistasCadastrados[i].nome == Artista.nome){
-					$scope.artistaExisteNoSistema = true;
-				};
-			};
+		var artistaJaEstaCadastrado = function(Artista) {
+			var existe = false;
+			
+			for(i in $scope.user.artistas) {
+				if($scope.user.artistas[i] == Artista) {
+					existe = true;
+					break;
+				}
+			}
+			
 
-			return $scope.artistaExisteNoSistema;
+			return existe;
 		};
 
 		init();
