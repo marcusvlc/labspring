@@ -1,8 +1,11 @@
 package br.com.fabricadeprogramador.ws.services;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.fabricadeprogramador.ws.model.Artista;
 import br.com.fabricadeprogramador.ws.model.Usuario;
 import br.com.fabricadeprogramador.ws.repository.UsuarioRepository;
 
@@ -19,6 +22,10 @@ public class UsuarioService {
 	
 	public Usuario buscarPorLogin(String login) {
 		return usuarioRepository.buscarPorLogin(login);
+	}
+
+	public Collection<Usuario> buscarTodos() {
+		return usuarioRepository.findAll();
 	}
 
 }

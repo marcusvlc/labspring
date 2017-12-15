@@ -22,14 +22,14 @@ public class ArtistaController {
 	ArtistaService artistaService;
 	
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/clientes/{id}/artistas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/usuarios/{id}/artistas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Artista> cadastrarCliente(@RequestBody Artista artista) {
 
 		Artista artistaCadastrado = artistaService.cadastrar(artista);
 		return new ResponseEntity<>(artistaCadastrado, HttpStatus.CREATED);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/clientes/{id}/artistas", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value = "/usuarios/{id}/artistas", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<Artista>> buscarTodosClientes() {
 
 		Collection<Artista> artistasBuscados = artistaService.buscarTodos();
@@ -37,7 +37,7 @@ public class ArtistaController {
 		return new ResponseEntity<>(artistasBuscados, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value = "/clientes/{id}/artistas/{id}" )
+	@RequestMapping(method = RequestMethod.DELETE, value = "/usuarios/{id}/artistas/{id}" )
 	public ResponseEntity<Artista> excluirCliente(@PathVariable Long id) {
 		
 		Artista artistaEncontrado = artistaService.buscarPorId(id);
@@ -49,7 +49,7 @@ public class ArtistaController {
 		return new ResponseEntity<>( HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, value = "/clientes/{id}/artistas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.PUT, value = "/usuarios/{id}/artistas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Artista> alterarCliente(@RequestBody Artista artista) {
 
 		Artista artistaAlterado = artistaService.alterar(artista);

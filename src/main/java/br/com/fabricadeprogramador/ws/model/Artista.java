@@ -29,13 +29,21 @@ public class Artista implements Serializable {
 	
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name="Cliente_id")
-	private Cliente cliente;
+	@JoinColumn(name="Usuario_id")
+	private Usuario usuario;
 	
 	public Artista() {
 		
 	}
 	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	public Integer getNota() {
 		return nota;
 	}
@@ -83,13 +91,6 @@ public class Artista implements Serializable {
 		this.id = id;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
 	
 	
 }

@@ -1,5 +1,7 @@
 package br.com.fabricadeprogramador.ws.controller;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.fabricadeprogramador.ws.model.Artista;
 import br.com.fabricadeprogramador.ws.model.Usuario;
 import br.com.fabricadeprogramador.ws.services.UsuarioService;
 
@@ -24,5 +27,13 @@ public class UsuarioController {
 		Usuario usuarioCadastrado = usuarioService.cadastrar(usuario);
 		
 		return new ResponseEntity<Usuario>(usuarioCadastrado, HttpStatus.OK );
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Collection<Usuario>> buscarTodosClientes() {
+
+		Collection<Usuario> usuariosBuscados = usuarioService.buscarTodos();
+
+		return new ResponseEntity<>(usuariosBuscados, HttpStatus.OK);
 	}
 }
