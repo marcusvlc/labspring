@@ -27,5 +27,9 @@ public class UsuarioService {
 	public Collection<Usuario> buscarTodos() {
 		return usuarioRepository.findAll();
 	}
+	
+	public Usuario buscarPorId(Long id) {
+		return usuarioRepository.findOne(id);
+	}
 
 }

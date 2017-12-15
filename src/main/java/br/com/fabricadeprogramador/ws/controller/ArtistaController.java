@@ -13,18 +13,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fabricadeprogramador.ws.model.Artista;
+import br.com.fabricadeprogramador.ws.model.Usuario;
 import br.com.fabricadeprogramador.ws.services.ArtistaService;
+import br.com.fabricadeprogramador.ws.services.UsuarioService;
 
 @RestController
 public class ArtistaController {
 	
 	@Autowired
 	ArtistaService artistaService;
+	@Autowired
+	UsuarioService usuarioService;
 	
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/usuarios/{id}/artistas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Artista> cadastrarCliente(@RequestBody Artista artista) {
-
+	public ResponseEntity<Artista> cadastrarCliente(@RequestBody Artista artista, @PathVariable Long id) {
+		
+		Usuario user = usuarioService.buscarPorId(id);
+		
+		artista.setUsuario(user);
+				
 		Artista artistaCadastrado = artistaService.cadastrar(artista);
 		return new ResponseEntity<>(artistaCadastrado, HttpStatus.CREATED);
 	}
