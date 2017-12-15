@@ -21,13 +21,11 @@
   <div class="login">
 	<h1>Sistema de Login</h1>
     <form method="post">
-    	<input type="text" ng-model="usuario" name="u" placeholder="Username" required="required"  />
-        <input type="password" ng-model="senha" name="p" placeholder="Password" required="required" />
-        <button type="submit" class="btn btn-primary btn-block btn-large" ng-click="fazerLogin(usuario, senha)">Entrar</button>
-		{{clientes}}
-		{{clienteLogado}}
+    	<input type="text" ng-model="Cliente.login" name="u" placeholder="Username" required="required"  />
+        <input type="password" ng-model="Cliente.senha" name="p" placeholder="Password" required="required" />
+        <button type="submit" class="btn btn-primary btn-block btn-large" ng-click="fazerLogin(Cliente)">Entrar</button>
 
-
+	{{user}}
     </form>
 </div>
 

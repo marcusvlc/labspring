@@ -2,6 +2,8 @@ package br.com.fabricadeprogramador.ws.controller;
 
 import java.util.Date;
 
+import javax.servlet.ServletException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,20 +25,31 @@ public class LoginController {
 	private UsuarioService usuarioService;
 	
 	@RequestMapping(value="/autenticar", consumes=MediaType.APPLICATION_JSON_VALUE, method= RequestMethod.POST )
-	public LoginResponse autenticar(@RequestBody Usuario usuario) {
-		System.out.println(usuario.getLogin() +  " " + usuario.getSenha());
+	public ResponseEntity<Usuario> autenticar(@RequestBody Usuario usuario) throws ServletException {
+		
+		if(usuario.getLogin() == null || usuario.getSenha() == null) {
+			throw new ServletException("Nome e senha são obrigatórios!");
+		}
 		
 		Usuario usuarioAutenticado = usuarioService.buscarPorLogin(usuario.getLogin());
 		
-		//retornar um token e nao um usuario
+		if(usuarioAutenticado == null) {
+			throw new ServletException("Usuário não cadastrado!");
+		}
 		
-		String token = Jwts.builder()
-				.setSubject(usuarioAutenticado.getLogin())
-				.signWith(SignatureAlgorithm.HS512, "livuska")
-				.setExpiration(new Date(System.currentTimeMillis() + 60000)) // 1 MINUTO ATUALMENTE.
-				.compact();
+		if(!usuarioAutenticado.getSenha().equals(usuario.getSenha())) {
+			throw new ServletException("Usuário ou senha inválidos!");
+		}
 		
-		return new LoginResponse(token);
+		return new ResponseEntity<Usuario>(usuarioAutenticado, HttpStatus.OK);
+		
+//		String token = Jwts.builder()
+//				.setSubject(usuarioAutenticado.getLogin())
+//				.signWith(SignatureAlgorithm.HS512, "livuska")
+//				.setExpiration(new Date(System.currentTimeMillis() + 60000)) // 1 MINUTO ATUALMENTE.
+//				.compact();
+		
+//		return new LoginResponse(token);
 	}
 	
 	private class LoginResponse {

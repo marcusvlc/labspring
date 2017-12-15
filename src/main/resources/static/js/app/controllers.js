@@ -17,39 +17,42 @@ app.controller("controlePrincipal",
 		$scope.musicaDaVez = {nome: "", albumNome:"", ano: "", duracao:""};
 		$scope.playlistDaVez = {nome:"", musicas:[]};
 		$scope.clientes = [];
-		$scope.user = {};
+		$scope.user = localStorage.getItem("userData");
+		
+		$http({method:'GET', url:'http://localhost:8080/clientes'})
+		.then(function(resposta){
+			$scope.clientes = resposta.data;
+			console.log("Fez corretamente o GET");
+			
+		}, function(resposta){
+			console.log("Fez erroneamente o GET");
+		});			
+		
+		
+			
 			
 		
-		
-			$http({method:'GET', url:'http://localhost:8080/clientes'})
-			.then(function(resposta){
-				$scope.clientes = resposta.data;
-				console.log("Fez corretamente o GET");
-				
-			}, function(resposta){
-				console.log("Fez erroneamente o GET");
-			});
-			
-		
-		$scope.alterarCliente = function(Cliente) {
-			$http.put('http://localhost:8080/clientes', JSON.stringify(Cliente)).then(
-				
-				function (response) {
-					console.log("Deu bom o PUT");
-				}, 
-				
-				function (response) {
-					console.log("Deu ruim o PUT");
-				});
-		}
+//		$scope.alterarCliente = function(Cliente) {
+//			$http.put('http://localhost:8080/clientes', JSON.stringify(Cliente)).then(
+//				
+//				function (response) {
+//					console.log("Deu bom o PUT");
+//				}, 
+//				
+//				function (response) {
+//					console.log("Deu ruim o PUT");
+//				});
+//		}
 		
 		
 		$scope.fazerLogin = function(Cliente) {
-			$scope.user = Cliente;
 			
-			$http.post("http://localhost:8080/autenticar", $scope.user)
+			$http.post("http://localhost:8080/autenticar", Cliente)
 			.then(function(resposta){
 				console.log("Sucesso " + resposta);
+				localStorage.setItem("userData", resposta.data);
+				window.location.href = "http://localhost:8080/index";
+				
 				
 			}, function(resposta){
 				console.log("Falha " + resposta);
