@@ -1,4 +1,4 @@
-package br.com.fabricadeprogramador.ws.controller;
+package br.com.lab2spring.ws.controller;
 
 import java.util.Collection;
 
@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import br.com.fabricadeprogramador.ws.model.Usuario;
-import br.com.fabricadeprogramador.ws.services.UsuarioService;
+
+import br.com.lab2spring.ws.model.Usuario;
+import br.com.lab2spring.ws.services.UsuarioService;
 
 @RestController
 public class UsuarioController {
@@ -36,7 +37,7 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/usuarios", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> alterarCliente(@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> alterarUsuario(@RequestBody Usuario usuario) {
 
 		Usuario usuarioAlterado = usuarioService.alterar(usuario);
 		return new ResponseEntity<>(usuarioAlterado, HttpStatus.OK);

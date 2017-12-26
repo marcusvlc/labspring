@@ -1,3 +1,4 @@
+package br.com.lab2spring.ws.controller;
 //package br.com.fabricadeprogramador.ws.controller;
 //
 //import java.util.Collection;

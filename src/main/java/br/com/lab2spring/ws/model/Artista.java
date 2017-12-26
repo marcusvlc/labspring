@@ -1,4 +1,4 @@
-package br.com.fabricadeprogramador.ws.model;
+package br.com.lab2spring.ws.model;
 
 import java.io.Serializable;
 

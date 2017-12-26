@@ -1,3 +1,4 @@
+package br.com.lab2spring.ws.services;
 //package br.com.fabricadeprogramador.ws.services;
 //
 //import java.util.Collection;

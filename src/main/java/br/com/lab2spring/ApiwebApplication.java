@@ -1,4 +1,4 @@
-package br.com.fabricadeprogramador;
+package br.com.lab2spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

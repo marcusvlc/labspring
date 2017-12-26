@@ -1,4 +1,4 @@
-package br.com.fabricadeprogramador;
+package br.com.lab2spring;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;

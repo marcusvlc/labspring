@@ -1,4 +1,4 @@
-package br.com.fabricadeprogramador.ws.controller;
+package br.com.lab2spring.ws.controller;
 
 import java.util.Date;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fabricadeprogramador.ws.model.Usuario;
-import br.com.fabricadeprogramador.ws.services.UsuarioService;
+import br.com.lab2spring.ws.model.Usuario;
+import br.com.lab2spring.ws.services.UsuarioService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 

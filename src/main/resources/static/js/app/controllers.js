@@ -12,12 +12,15 @@ app.controller("controlePrincipal",
 		$scope.musicasListadas = [];
 		$scope.artistaExisteNoSistema = false;
 		$scope.editando = false;
-		$scope.artistaDaVez = {nome: "", imagem: "" , comentario: "", ehFavorito: false, albuns:[],  nota:"0", ultimaMusica:""};
+		$scope.artistaDaVez = {nome: "", imagem: "" , comentario: "", ehFavorito: false, nota:"0", ultimaMusica:""};
 		$scope.albumDaVez = {nome: "", imagem: "", ano: "", musicas:[], dono:""};
 		$scope.musicaDaVez = {nome: "", albumNome:"", ano: "", duracao:""};
 		$scope.playlistDaVez = {nome:"", musicas:[]};
 		$scope.usuariosCadastrados = [];
-		$scope.user = localStorage.getItem("userData");
+		var userObject = localStorage.getItem('userData');
+		$scope.user = JSON.parse(userObject);
+		$scope.userDaVez = angular.copy($scope.user);
+		
 		
 		$http({method:'GET', url:'http://localhost:8080/usuarios'})
 			.then(function(resposta){
@@ -30,10 +33,10 @@ app.controller("controlePrincipal",
 
 		
 		
-		$scope.fazerLogin = function(Cliente) {
+		$scope.fazerLogin = function(Usuario) {
 			
-			$http.post("http://localhost:8080/autenticar", Cliente)
-			.then(function(resposta){
+			$http.post("http://localhost:8080/autenticar", Usuario)
+			.then(function (resposta){
 				console.log("Sucesso " + resposta);
 				localStorage.setItem("userData", JSON.stringify(resposta.data));
 				window.location.href = "http://localhost:8080/index";
@@ -47,7 +50,7 @@ app.controller("controlePrincipal",
 		}
 		
 		$scope.atualizarUsuario = function(Usuario) {
-			$http.put('http://localhost:8080/usuarios', JSON.stringify(Cliente)).then(
+			$http.put('http://localhost:8080/usuarios', Usuario).then(
 				
 				function (response) {
 					console.log("Deu bom o PUT");
@@ -280,10 +283,10 @@ app.controller("controlePrincipal",
 				limparFormulario();
 			} else {
 					if(artistaJaEstaCadastrado(Artista) == false) {
-					$scope.user.artistas.push(Artista);
+					$scope.userDaVez.artistas.push(Artista);
 					$('#modal1').modal('close');
   					Materialize.toast('Dados Salvos com sucesso!', 1000) // Tempo esta em ms
-  					$scope.atualizarUsuario($scope.user);
+  					$scope.atualizarUsuario($scope.userDaVez);
 					limparFormulario();
 				} else {
 					Materialize.toast('O artista já existe no sistema, tente novamente!', 2000) // Tempo esta em ms
@@ -405,7 +408,7 @@ app.controller("controlePrincipal",
 		};
 
 		var limparFormulario = function() {
-			$scope.Artista = {nome: "", imagem: "", comentario: "", albuns:[],  nota:"0", ultimaMusica:""};
+			$scope.Artista = {"id": "" ,"nome":"","imagem":"","nota":"","comentario":"","ehFavorito":false,"ultimaMusicaOuvida":null};
 			$scope.artistaExisteNoSistema = false;
 
 		};
@@ -413,7 +416,7 @@ app.controller("controlePrincipal",
 		var artistaJaEstaCadastrado = function(Artista) {
 			var existe = false;
 			
-			for(i in $scope.user.artistas) {
+			for(i in $scope.userDaVez.artistas) {
 				if($scope.user.artistas[i] == Artista) {
 					existe = true;
 					break;

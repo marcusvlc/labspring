@@ -1,12 +1,12 @@
-package br.com.fabricadeprogramador.ws.services;
+package br.com.lab2spring.ws.services;
 
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.fabricadeprogramador.ws.model.Artista;
-import br.com.fabricadeprogramador.ws.repository.ArtistaRepository;
+import br.com.lab2spring.ws.model.Artista;
+import br.com.lab2spring.ws.repository.ArtistaRepository;
 
 @Service
 public class ArtistaService {

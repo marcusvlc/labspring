@@ -1,3 +1,4 @@
+package br.com.lab2spring.ws.repository;
 //package br.com.fabricadeprogramador.ws.repository;
 //
 //import org.springframework.data.jpa.repository.JpaRepository;

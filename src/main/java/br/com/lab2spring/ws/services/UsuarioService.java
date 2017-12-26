@@ -1,12 +1,13 @@
-package br.com.fabricadeprogramador.ws.services;
+package br.com.lab2spring.ws.services;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.fabricadeprogramador.ws.model.Usuario;
-import br.com.fabricadeprogramador.ws.repository.UsuarioRepository;
+import br.com.lab2spring.ws.model.Usuario;
+import br.com.lab2spring.ws.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
@@ -32,6 +33,7 @@ public class UsuarioService {
 	}
 
 	public Usuario alterar(Usuario usuario) {
+		System.out.println(usuario.getArtistas());
 		return usuarioRepository.save(usuario);
 	}
 

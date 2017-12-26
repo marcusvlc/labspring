@@ -24,8 +24,8 @@
 
 </head>
 
+{{userDaVez}}
 <main class="container"> 
-{{user}}
 <div class="row">
   <div id="elementosdepesquisa">
     <img src="img/search.png" width="40" height="40">
@@ -41,12 +41,13 @@
 <div class="row">
   <!-- Modal Trigger -->
  <a ng-click="abreAdicionarArtista()" class="waves-effect waves-light btn">+ Adicionar Artista</a>
- <a ng-click="abreAdicionarAlbum()" class="waves-effect waves-light btn pink">+ Adicionar Álbum</a>
- <a ng-click="abreAdicionarMusica()" class="waves-effect waves-light btn purple">+ Adicionar Música</a>
+ <a ng-click="abreAdicionarAlbum()" class="waves-effect waves-light btn pink">+ Adicionar Ã�lbum</a>
+ <a ng-click="abreAdicionarMusica()" class="waves-effect waves-light btn purple">+ Adicionar MÃºsica</a>
 
 </div>
-{{clienteLogado}}
-{{clientes}}
+
+
+
 <table class="bordered">
 
 <thead>
@@ -60,9 +61,9 @@
 </thead>
 
 <tbody>
-  <tr ng-repeat="i in clienteLogado.artistas | filter:buscado">
+  <tr ng-repeat="i in userDaVez.artistas | filter:buscado">
     <td>{{i.nome}}</td>
-    <td ng-click="abreListarAlbuns(i)"><img class="circle" alt="Imagem inválida" src="{{i.imagem}}" width="100" height="100"></td>
+    <td ng-click="abreListarAlbuns(i)"><img class="circle" alt="Imagem invÃ¡lida" src="{{i.imagem}}" width="100" height="100"></td>
     <td>{{i.comentario}}</td>
     <td>{{i.nota}}</td>
     <td>
@@ -79,7 +80,7 @@
 
 <div id="elementosdeinfo"> 
 <i class="material-icons">album</i>
-<h5>Para visualizar os álbuns de um artista ou dar nota ao mesmo clique em sua foto</h5>
+<h5>Para visualizar os Ã¡lbuns de um artista ou dar nota ao mesmo clique em sua foto</h5>
 </div>
 
 </div>
@@ -89,12 +90,12 @@
 <!-- Estrutura modal para cadastrar/editar ARTISTAS -->
 <div id="modal1" class="modal modal-fixed-footer">
 <div class="modal-content">
-<h4 ng-if="!editando">↪ Adicionar um artista no sistema</h4>
-<h4 ng-if="editando">↪ Editar Artista</h4>
-<p ng-if="!editando">Preencha todas as informações para cadastrar um artista no sistema!</p>
-<p ng-if="editando">Preencha todas as informações para editar o artista!</p>
+<h4 ng-if="!editando">â†ª Adicionar um artista no sistema</h4>
+<h4 ng-if="editando">â†ª Editar Artista</h4>
+<p ng-if="!editando">Preencha todas as informaÃ§Ãµes para cadastrar um artista no sistema!</p>
+<p ng-if="editando">Preencha todas as informaÃ§Ãµes para editar o artista!</p>
 
-<p>Lembre-se de colocar uma URL válida ou o sistema não mostrará a imagem do artista</p>
+<p>Lembre-se de colocar uma URL vÃ¡lida ou o sistema nÃ£o mostrarÃ¡ a imagem do artista</p>
 <div class="row">
     <div class="input-field col m6 s6">
     <a>Nome do Artista<a>
@@ -105,7 +106,7 @@
   <input type="text" ng-modeL="Artista.imagem" class="validate">
 </div>
     <div class="input-field col m6 s6">
-    <a>Comentário sobre o artista<a>
+    <a>ComentÃ¡rio sobre o artista<a>
   <input type="text" ng-modeL="Artista.comentario" class="validate" maxlength="100">
 </div>
 
@@ -122,27 +123,27 @@
 <!-- Estrutura modal para cadastrar Albuns -->
 <div id="modal2" class="modal modal-fixed-footer">
 <div class="modal-content">
-<h4>↪ Adicionar um Álbum no sistema</h4>
-<p>Preencha todas as informações para cadastrar um álbum no sistema!</p>
+<h4>â†ª Adicionar um Ã�lbum no sistema</h4>
+<p>Preencha todas as informaÃ§Ãµes para cadastrar um Ã¡lbum no sistema!</p>
 
-<p>Lembre-se de colocar uma URL válida ou o sistema não mostrará a imagem do álbum!</p>
-<p>Você só pode cadastrar álbuns caso exista artistas cadastrados no sistema!</p>
+<p>Lembre-se de colocar uma URL vÃ¡lida ou o sistema nÃ£o mostrarÃ¡ a imagem do Ã¡lbum!</p>
+<p>VocÃª sÃ³ pode cadastrar Ã¡lbuns caso exista artistas cadastrados no sistema!</p>
 <div class="row">
     <div class="input-field col m6 s6">
-    <a>Nome do Álbum<a>
+    <a>Nome do Ã�lbum<a>
   <input type="text" ng-modeL="Album.nome" class="validate" maxlength="50">
 </div>
     <div class="input-field col m6 s6">
-    <a>URL com imagem do álbum<a>
+    <a>URL com imagem do Ã¡lbum<a>
   <input type="text" ng-modeL="Album.imagem" class="validate">
 </div>
 
     <div class="input-field col m6 s6">
-    <a>Ano de lançamento do álbum<a>
+    <a>Ano de lanÃ§amento do Ã¡lbum<a>
       <input type="number" ng-modeL="Album.ano" class="validate">
   </div>
 
-    <a>Você selecionou: {{artistaDaVez.nome}}</a>
+    <a>VocÃª selecionou: {{artistaDaVez.nome}}</a>
     <br>
     <a class='dropdown-button btn red' data-activates='dropdown1'>Selecione o Artista!</a>
 
@@ -165,24 +166,24 @@
 <!-- Estrutura modal para cadastrar MUSICAS -->
 <div id="modal4" class="modal modal-fixed-footer">
 <div class="modal-content">
-<h4>↪ Adicionar uma Música no sistema</h4>
-<p>Preencha todas as informações para cadastrar uma música no sistema!</p>
+<h4>â†ª Adicionar uma MÃºsica no sistema</h4>
+<p>Preencha todas as informaÃ§Ãµes para cadastrar uma mÃºsica no sistema!</p>
 
-<p>Você só pode cadastrar músicas caso exista artistas e álbuns cadastrados no sistema!</p>
+<p>VocÃª sÃ³ pode cadastrar mÃºsicas caso exista artistas e Ã¡lbuns cadastrados no sistema!</p>
 <div class="row">
     <div class="input-field col m6 s6">
-    <a>Nome da Música<a>
+    <a>Nome da MÃºsica<a>
   <input type="text" ng-modeL="Musica.nome" class="validate" maxlength="50">
 </div>
 
     <div class="input-field col m6 s6">
-    <a>Ano de lançamento da música<a>
+    <a>Ano de lanÃ§amento da mÃºsica<a>
       <input type="number" ng-modeL="Musica.ano" class="validate">
   </div>
 
-    <a>Você selecionou: {{albumDaVez.nome}}</a>
+    <a>VocÃª selecionou: {{albumDaVez.nome}}</a>
 
-    <a class='dropdown-button btn red' data-activates='dropdown2'>Selecione o Álbum!</a>
+    <a class='dropdown-button btn red' data-activates='dropdown2'>Selecione o Ã�lbum!</a>
 
   <div class="row">
   <!-- Dropdown Structure -->
@@ -193,7 +194,7 @@
 </div>
 
    <div class="input-field col m6 s6">
-    <a>Duração da música<a>
+    <a>DuraÃ§Ã£o da mÃºsica<a>
       <input type="number" ng-modeL="Musica.duracao" class="validate">
   </div>
 
@@ -209,7 +210,7 @@
   <!-- Modal Para listar Albuns -->
   <div id="modal3" class="modal bottom-sheet">
     <div id="infoartista" class="modal-content">
-    <h3>Informações do Artista {{artistaDaVez.nome}}</h3>
+    <h3>InformaÃ§Ãµes do Artista {{artistaDaVez.nome}}</h3>
 
     <div id="teste1">
     <h4>Indique uma nota para o Artista</h4>
@@ -223,14 +224,14 @@
     </div>
 
     <div id="teste2">
-      <h4>Álbuns do Artista</h4>
+      <h4>Ã�lbuns do Artista</h4>
       <ul>
         <div class="conteudo" ng-repeat="i in albunsListados">
           <div class="icone">
             <i class="material-icons">album</i>
           </div>
             <div class="listadealbuns">
-             <li>Nome do Álbum: {{i.nome}} - Ano de Lançamento: {{i.ano}}</li>
+             <li>Nome do Ã�lbum: {{i.nome}} - Ano de LanÃ§amento: {{i.ano}}</li>
              </div>
         </div>
       </ul>
@@ -247,20 +248,20 @@
 <!-- Estrutura modal para selecionar ultima musica ouvida -->
 <div id="modalmusica" class="modal modal-fixed-footer">
 <div class="modal-content">
-<h4 >↪ Selecione a última música que você ouviu</h4>
-<p>Aqui estarão listadas todas as músicas do artista {{artistaDaVez.nome}} <br> Atualmente, a última música ouvida deste artista é: {{artistaDaVez.ultimaMusica}}</p>
+<h4 >â†ª Selecione a Ãºltima mÃºsica que vocÃª ouviu</h4>
+<p>Aqui estarÃ£o listadas todas as mÃºsicas do artista {{artistaDaVez.nome}} <br> Atualmente, a Ãºltima mÃºsica ouvida deste artista Ã©: {{artistaDaVez.ultimaMusica}}</p>
 
 
 <div class="row">
     <div class="letrasmusica">
-          <h5>Você selecionou a música: {{musicaDaVez.nome}}</h5>
+          <h5>VocÃª selecionou a mÃºsica: {{musicaDaVez.nome}}</h5>
           <div class="row">
-          <a class='dropdown-button btn red' data-activates='dropdown3'>Selecione a última música que você ouviu!</a>
+          <a class='dropdown-button btn red' data-activates='dropdown3'>Selecione a Ãºltima mÃºsica que vocÃª ouviu!</a>
             <ul id='dropdown3' class='dropdown-content'>
               <li ng-repeat="x in musicasListadas" ng-click="setMusicaDaVez(x)"><a>{{x.nome}}</a></li>
             </ul>
             <br><br><br>
-            <h5>Ao clicar em salvar, você selecionará: {{musicaDaVez.nome}}<br> como a última música ouvida do artista {{artistaDaVez.nome}}</h5>
+            <h5>Ao clicar em salvar, vocÃª selecionarÃ¡: {{musicaDaVez.nome}}<br> como a Ãºltima mÃºsica ouvida do artista {{artistaDaVez.nome}}</h5>
             <br>
         </div>
     </div>

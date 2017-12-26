@@ -1,4 +1,4 @@
-package br.com.fabricadeprogramador.ws.controller;
+package br.com.lab2spring.ws.controller;
 
 import java.util.Collection;
 
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fabricadeprogramador.ws.model.Artista;
-import br.com.fabricadeprogramador.ws.model.Usuario;
-import br.com.fabricadeprogramador.ws.services.ArtistaService;
-import br.com.fabricadeprogramador.ws.services.UsuarioService;
+import br.com.lab2spring.ws.model.Artista;
+import br.com.lab2spring.ws.model.Usuario;
+import br.com.lab2spring.ws.services.ArtistaService;
+import br.com.lab2spring.ws.services.UsuarioService;
 
 @RestController
 public class ArtistaController {
@@ -31,9 +31,13 @@ public class ArtistaController {
 		
 		Usuario user = usuarioService.buscarPorId(id);
 		
-		artista.setUsuario(user);
+		System.out.println(user.getLogin());
+//		artista.setUsuario(user);
 				
 		Artista artistaCadastrado = artistaService.cadastrar(artista);
+		System.out.println(artistaCadastrado.getNome());
+
+		
 		return new ResponseEntity<>(artistaCadastrado, HttpStatus.CREATED);
 	}
 

@@ -1,3 +1,4 @@
+package br.com.lab2spring.ws.model;
 //package br.com.fabricadeprogramador.ws.model;
 //
 //

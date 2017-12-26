@@ -1,4 +1,4 @@
-package br.com.fabricadeprogramador.ws.model;
+package br.com.lab2spring.ws.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class Usuario {
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy="usuario")
-	private List<Artista> artistas = new ArrayList<Artista>();
+	private List<Artista> artistas;
 	
 	public Usuario() {
 		
