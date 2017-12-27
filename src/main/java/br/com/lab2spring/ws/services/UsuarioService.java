@@ -24,8 +24,8 @@ public class UsuarioService {
 		
 	}
 	
-	public Usuario buscarPorLogin(String login) {
-		return usuarioRepository.buscarPorLogin(login);
+	public Usuario buscarPorEmail(String email) {
+		return usuarioRepository.buscarPorEmail(email);
 	}
 
 	public Collection<Usuario> buscarTodos() {

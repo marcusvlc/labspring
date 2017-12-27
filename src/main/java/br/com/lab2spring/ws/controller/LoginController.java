@@ -27,11 +27,11 @@ public class LoginController {
 	@RequestMapping(value="/autenticar", consumes=MediaType.APPLICATION_JSON_VALUE, method= RequestMethod.POST )
 	public ResponseEntity<Usuario> autenticar(@RequestBody Usuario usuario) throws ServletException {
 		
-		if(usuario.getLogin() == null || usuario.getSenha() == null) {
-			throw new ServletException("Nome e senha são obrigatórios!");
+		if(usuario.getSenha() == null || usuario.getEmail() == null) {
+			throw new ServletException("Nome, email e senha são obrigatórios!");
 		}
 		
-		Usuario usuarioAutenticado = usuarioService.buscarPorLogin(usuario.getLogin());
+		Usuario usuarioAutenticado = usuarioService.buscarPorEmail(usuario.getEmail());
 		
 		if(usuarioAutenticado == null) {
 			throw new ServletException("Usuário não cadastrado!");
@@ -43,21 +43,7 @@ public class LoginController {
 		
 		return new ResponseEntity<Usuario>(usuarioAutenticado, HttpStatus.OK);
 		
-//		String token = Jwts.builder()
-//				.setSubject(usuarioAutenticado.getLogin())
-//				.signWith(SignatureAlgorithm.HS512, "livuska")
-//				.setExpiration(new Date(System.currentTimeMillis() + 60000)) // 1 MINUTO ATUALMENTE.
-//				.compact();
-		
-//		return new LoginResponse(token);
-	}
-	
-	private class LoginResponse {
-		public String token;
-		
-		public LoginResponse(String token) {
-			this.token = token;
-		}
+
 		
 	}
 

@@ -23,6 +23,7 @@ public class Usuario {
 	private Long id;
 	private String login;
 	private String senha;
+	private String email;
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy="usuario")
@@ -30,6 +31,14 @@ public class Usuario {
 	
 	public Usuario() {
 		
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public List<Artista> getArtistas() {

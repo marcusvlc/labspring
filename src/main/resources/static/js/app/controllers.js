@@ -44,11 +44,6 @@ app.controller("controlePrincipal",
 				console.log("Sucesso " + resposta);
 				localStorage.setItem("userData", JSON.stringify(resposta.data));
 				
-				
-				var obj = resposta.data.artistas;
-				localStorage.setItem("test", JSON.stringify(obj));
-				
-				
 				window.location.href = "http://localhost:8080/index";
 				
 				
@@ -57,6 +52,33 @@ app.controller("controlePrincipal",
 				
 			});
 			
+		}
+		
+		$scope.registrar = function(Usuario) {
+			var existe = false;
+			var keys = Object.keys($scope.usuariosCadastrados);
+			for (var i = 0, len = keys.length; i < len; i++) {
+			  if($scope.usuariosCadastrados[keys[i]].email ==  Usuario.email) {
+				  existe = true;
+				  break;
+			  }
+			}
+			
+			if(existe ==  false) {
+				$http.post("http://localhost:8080/usuarios", Usuario)
+				.then(function (resposta){
+					console.log("Registrou corretamente " + resposta);
+					alert("Registrado com sucesso!");
+					window.location.href = "http://localhost:8080/login";
+					
+					
+				}, function(resposta){
+					console.log("Falha " + resposta);
+					
+				});
+			} else {
+				alert("Usuario já cadastrado, tente fazer seu registro com outras informações!");
+			}
 		}
 		
 		

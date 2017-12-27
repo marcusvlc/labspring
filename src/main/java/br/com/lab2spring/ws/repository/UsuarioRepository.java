@@ -10,7 +10,7 @@ import br.com.lab2spring.ws.model.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	
-	@Query(value="Select u from Usuario u where u.login=:plogin")
-	public Usuario buscarPorLogin(@Param("plogin") String login);
+	@Query(value="Select u from Usuario u where u.email=:pemail")
+	public Usuario buscarPorEmail(@Param("pemail") String email);
 
 }

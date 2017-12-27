@@ -19,16 +19,17 @@
 
 <body ng-controller="controlePrincipal">
   <div class="login">
-	<h1>Faça seu Login</h1>
+	<h1>Faça seu Cadastro!</h1>
 
     <form method="post">
-    	<input type="text" ng-model="Usuario.email" name="u" placeholder="Email" required="required"  />
-        <input type="password" ng-model="Usuario.senha" name="p" placeholder="Senha" required="required" />
-        <button type="submit" class="btn btn-primary btn-block btn-large" ng-click="fazerLogin(Usuario)">Entrar</button>
+        <input type="text" ng-model="Usuario.login" name="u" placeholder="Escolha um Login" required="required"  />
+    	<input type="email" ng-model="Usuario.email" name="u" placeholder="Escolha seu email" required="required"  />
+        <input type="password" ng-model="Usuario.senha" name="p" placeholder="Escolha sua senha" required="required" />
+        <button type="submit" class="btn btn-primary btn-block btn-large" ng-click="registrar(Usuario)">Registrar-se</button>
 
     </form>
     
-    <button onclick="window.location.href='/registrar'" class="btn btn-primary btn-block btn-large">Registrar</button>
+    <button onclick="window.location.href='/login'" class="btn btn-primary btn-block btn-large">Voltar</button>
 </div>
 
 </body>

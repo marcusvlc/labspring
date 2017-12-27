@@ -16,5 +16,10 @@ public class TelasController {
 		return "index";
 	}
 	
+	@RequestMapping("/registrar")
+	public String irParaRegistro() {
+		return "registrar";
+	}
+	
 
 }
