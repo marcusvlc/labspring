@@ -2,6 +2,8 @@ package br.com.lab2spring.ws.controller;
 
 import java.util.Collection;
 
+import javax.servlet.ServletException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +23,11 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 	
 	@RequestMapping(value="/usuarios", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) throws ServletException {
+		
+		if(usuario.getLogin() == null || usuario.getSenha() == null || usuario.getEmail() == null) {
+			throw new ServletException("Nome, email e senha são obrigatórios para registro!");
+		}
 		
 		Usuario usuarioCadastrado = usuarioService.cadastrar(usuario);
 		

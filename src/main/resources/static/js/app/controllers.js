@@ -55,6 +55,7 @@ app.controller("controlePrincipal",
 		}
 		
 		$scope.registrar = function(Usuario) {
+			
 			var existe = false;
 			var keys = Object.keys($scope.usuariosCadastrados);
 			for (var i = 0, len = keys.length; i < len; i++) {

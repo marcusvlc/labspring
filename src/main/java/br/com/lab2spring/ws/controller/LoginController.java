@@ -28,7 +28,7 @@ public class LoginController {
 	public ResponseEntity<Usuario> autenticar(@RequestBody Usuario usuario) throws ServletException {
 		
 		if(usuario.getSenha() == null || usuario.getEmail() == null) {
-			throw new ServletException("Nome, email e senha são obrigatórios!");
+			throw new ServletException("Email e senha são obrigatórios para autenticação!");
 		}
 		
 		Usuario usuarioAutenticado = usuarioService.buscarPorEmail(usuario.getEmail());

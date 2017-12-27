@@ -38,10 +38,6 @@ public class UsuarioService {
 
 	public Usuario alterar(Usuario usuario) {
 		
-		for(int i = 0; i < usuario.getArtistas().size(); i++) {
-			artistaService.cadastrar(usuario.getArtistas().get(i));
-		}
-		
 		return usuarioRepository.save(usuario);
 	}
 
