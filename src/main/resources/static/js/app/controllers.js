@@ -18,8 +18,12 @@ app.controller("controlePrincipal",
 		$scope.playlistDaVez = {nome:"", musicas:[]};
 		$scope.usuariosCadastrados = [];
 		var userObject = localStorage.getItem('userData');
-		$scope.user = JSON.parse(userObject);
+		$scope.user = JSON.parse(localStorage.getItem('userData'));
 		$scope.userDaVez = angular.copy($scope.user);
+		
+		$scope.atualizarCache = function(Usuario) {
+			localStorage.setItem("userData", JSON.stringify(Usuario));
+		}
 		
 		
 		$http({method:'GET', url:'http://localhost:8080/usuarios'})
@@ -39,6 +43,12 @@ app.controller("controlePrincipal",
 			.then(function (resposta){
 				console.log("Sucesso " + resposta);
 				localStorage.setItem("userData", JSON.stringify(resposta.data));
+				
+				
+				var obj = resposta.data.artistas;
+				localStorage.setItem("test", JSON.stringify(obj));
+				
+				
 				window.location.href = "http://localhost:8080/index";
 				
 				
@@ -49,17 +59,6 @@ app.controller("controlePrincipal",
 			
 		}
 		
-		$scope.atualizarUsuario = function(Usuario) {
-			$http.put('http://localhost:8080/usuarios', Usuario).then(
-				
-				function (response) {
-					console.log("Deu bom o PUT");
-				}, 
-				
-				function (response) {
-					console.log("Deu ruim o PUT");
-				});
-		}
 		
 
 		$scope.removerMusicaPlaylist = function(Playlist, Musica) {
@@ -276,6 +275,8 @@ app.controller("controlePrincipal",
 
 			return existeMusica
 		}
+		
+		
 
 		$scope.addArtista = function(Artista) {
 			if(Artista.nome == "") {
@@ -283,10 +284,20 @@ app.controller("controlePrincipal",
 				limparFormulario();
 			} else {
 					if(artistaJaEstaCadastrado(Artista) == false) {
+					
+					$http.post("http://localhost:8080/usuarios/" + $scope.userDaVez.id + "/artistas", Artista)
+					.then(function (resposta){
+						console.log("Cadastrou o artista com sucesso " + resposta);
+						Artista.id = resposta.data.id;
+						
+					}, function(resposta){
+						console.log("Falha " + resposta);
+					});
+					
 					$scope.userDaVez.artistas.push(Artista);
+					$scope.atualizarCache($scope.userDaVez);
 					$('#modal1').modal('close');
   					Materialize.toast('Dados Salvos com sucesso!', 1000) // Tempo esta em ms
-  					$scope.atualizarUsuario($scope.userDaVez);
 					limparFormulario();
 				} else {
 					Materialize.toast('O artista já existe no sistema, tente novamente!', 2000) // Tempo esta em ms
@@ -300,6 +311,22 @@ app.controller("controlePrincipal",
 			var e = document.getElementById("notaselecao");
 			var notaDoArtista = e.options[e.selectedIndex].value;
 			$scope.artistaDaVez.nota = notaDoArtista;
+			
+			$http.post("http://localhost:8080/usuarios/"+ $scope.userDaVez.id + "/artistas", $scope.artistaDaVez)
+			.then(function (resposta){
+				console.log("Alterou com sucesso " + resposta);
+
+											
+				
+			}, function(resposta){
+				console.log("Falha " + resposta);
+				
+			});
+			
+			
+			$scope.atualizarCache($scope.userDaVez);
+			
+			
 			Materialize.toast('O artista ' + $scope.artistaDaVez.nome + ' foi avaliado com nota ' + notaDoArtista, 2000)
 		}
 
@@ -329,8 +356,17 @@ app.controller("controlePrincipal",
 
 		$scope.favoritarArtista = function(Artista) {
 				Artista.ehFavorito = true;
-				Materialize.toast('O artista foi adicionado a sua lista de favoritos!', 2000) 
-				$scope.artistasFavoritados.push(Artista);
+				$http.post("http://localhost:8080/usuarios/"+ $scope.userDaVez.id + "/artistas", Artista)
+				.then(function (resposta){
+					console.log("Alterou com sucesso " + resposta);			
+					
+				}, function(resposta){
+					console.log("Falha " + resposta);
+					
+				});
+				
+				$scope.atualizarCache($scope.userDaVez);
+//				$scope.artistasFavoritados.push(Artista);
 		}
 
 		$scope.desfavoritarArtista = function(Artista) {
@@ -339,21 +375,26 @@ app.controller("controlePrincipal",
 				if(click == true) {
 					Artista.ehFavorito = false;
 					Materialize.toast('O artista foi removido da sua lista de favoritos!', 2000)
-					for (var i = $scope.artistasFavoritados.length - 1; i >= 0; i--) {
-				 	if(Artista.nome == $scope.artistasFavoritados[i].nome) {
-				 		$scope.artistasFavoritados.splice(i, 1);
-				 	}
-				 } 
+					$http.post("http://localhost:8080/usuarios/"+ $scope.userDaVez.id + "/artistas", Artista)
+					.then(function (resposta){
+						console.log("Alterou com sucesso " + resposta);
+						
+						
+					}, function(resposta){
+						console.log("Falha " + resposta);
+						
+					});
 				}
-
+				
+				$scope.atualizarCache($scope.userDaVez);
 
 		}
 
-		$scope.testar = function() {
-			 for(i=0; i< $scope.artistasCadastrados.length; i++) {  
-	        document.write('<option value="' + $scope.artistasCadastrados[i].nome +'">' + $scope.artistasCadastrados[i].nome + '</option>');
-	   		 };
-		};
+//		$scope.testar = function() {
+//			 for(i=0; i< $scope.artistasCadastrados.length; i++) {  
+//	        document.write('<option value="' + $scope.artistasCadastrados[i].nome +'">' + $scope.artistasCadastrados[i].nome + '</option>');
+//	   		 };
+//		};
  
 		$scope.editarArtista = function(Artista) {
 			$scope.editando = true;
@@ -363,19 +404,28 @@ app.controller("controlePrincipal",
 		};
 
 		$scope.removerArtista = function(Artista) {
-			for (var i = $scope.artistasCadastrados.length - 1; i >= 0; i--) {
-				if(Artista == $scope.artistasCadastrados[i]) {
-					$scope.artistasCadastrados.splice(i, 1);
-				};
-			};
-
-			for (var i = $scope.artistasFavoritados.length - 1; i >= 0; i--) {
-				if(Artista == $scope.artistasFavoritados[i]) {
-					$scope.artistasFavoritados.splice(i, 1);
-				};
+			
+			
+			var keys = Object.keys($scope.userDaVez.artistas);
+			for (var i = 0, len = keys.length; i < len; i++) {
+			  if($scope.userDaVez.artistas[keys[i]] ==  Artista) {
+				  $scope.userDaVez.artistas.splice(i, 1);
+			  }
 			}
-
-			$scope.removeAlbunsArtista(Artista);
+			
+			
+			$http.delete("http://localhost:8080/usuarios/" + $scope.userDaVez.id + "/artistas/" + Artista.id)
+			.then(function (resposta){
+				console.log("Removeu o artista com sucesso " + resposta);
+				
+			}, function(resposta){
+				console.log("Falha " + resposta);
+			});
+			
+			
+			$scope.atualizarCache($scope.userDaVez);
+			
+			
 
 		};
 
@@ -395,6 +445,21 @@ app.controller("controlePrincipal",
 						artistaEditado.nome = Artista.nome;
 						artistaEditado.imagem = Artista.imagem;
 						artistaEditado.comentario = Artista.comentario;
+						
+						
+						$http.post("http://localhost:8080/usuarios/"+ $scope.userDaVez.id + "/artistas", Artista)
+						.then(function (resposta){
+							console.log("Alterou com sucesso " + resposta);
+		
+														
+							
+						}, function(resposta){
+							console.log("Falha " + resposta);
+							
+						});
+						
+						$scope.atualizarCache($scope.userDaVez);
+						
 						$('#modal1').modal('close');
   						Materialize.toast('Dados Salvos com sucesso!', 1000) // Tempo esta em ms
 						limparFormulario();
@@ -408,7 +473,7 @@ app.controller("controlePrincipal",
 		};
 
 		var limparFormulario = function() {
-			$scope.Artista = {"id": "" ,"nome":"","imagem":"","nota":"","comentario":"","ehFavorito":false,"ultimaMusicaOuvida":null};
+			$scope.Artista = {"id": 0 ,"nome":"","imagem":"","nota":"0","comentario":"","ehFavorito":false,"ultimaMusicaOuvida":null};
 			$scope.artistaExisteNoSistema = false;
 
 		};
@@ -416,11 +481,12 @@ app.controller("controlePrincipal",
 		var artistaJaEstaCadastrado = function(Artista) {
 			var existe = false;
 			
-			for(i in $scope.userDaVez.artistas) {
-				if($scope.user.artistas[i] == Artista) {
-					existe = true;
-					break;
-				}
+			var keys = Object.keys($scope.userDaVez.artistas);
+			for (var i = 0, len = keys.length; i < len; i++) {
+			  if($scope.userDaVez.artistas[keys[i]].nome ==  Artista.nome) {
+				  existe = true;
+				  break;
+			  }
 			}
 			
 

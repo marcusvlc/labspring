@@ -27,12 +27,11 @@ public class ArtistaController {
 	
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/usuarios/{id}/artistas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Artista> cadastrarCliente(@RequestBody Artista artista, @PathVariable Long id) {
+	public ResponseEntity<Artista> cadastrarArtista(@RequestBody Artista artista, @PathVariable Long id) {
 		
 		Usuario user = usuarioService.buscarPorId(id);
 		
-		System.out.println(user.getLogin());
-//		artista.setUsuario(user);
+		artista.setUsuario(user);
 				
 		Artista artistaCadastrado = artistaService.cadastrar(artista);
 		System.out.println(artistaCadastrado.getNome());
@@ -42,15 +41,15 @@ public class ArtistaController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/usuarios/{id}/artistas", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<Artista>> buscarTodosClientes() {
-
+	public ResponseEntity<Collection<Artista>> buscarTodosArtistas() {
+		
 		Collection<Artista> artistasBuscados = artistaService.buscarTodos();
 
 		return new ResponseEntity<>(artistasBuscados, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/usuarios/{id}/artistas/{id}" )
-	public ResponseEntity<Artista> excluirCliente(@PathVariable Long id) {
+	public ResponseEntity<Artista> excluirArtista(@PathVariable Long id) {
 		
 		Artista artistaEncontrado = artistaService.buscarPorId(id);
 		if (artistaEncontrado==null){
@@ -62,7 +61,7 @@ public class ArtistaController {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/usuarios/{id}/artistas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Artista> alterarCliente(@RequestBody Artista artista) {
+	public ResponseEntity<Artista> alterarArtista(@RequestBody Artista artista) {
 
 		Artista artistaAlterado = artistaService.alterar(artista);
 		return new ResponseEntity<>(artistaAlterado, HttpStatus.OK);

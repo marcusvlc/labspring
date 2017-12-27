@@ -22,10 +22,12 @@ public class Artista implements Serializable {
 	private Long id;
 	private String nome;
 	private String imagem;
-	private Integer nota;
+	private String nota;
 	private String comentario;
 	private boolean ehFavorito;
 	private String ultimaMusicaOuvida;
+	
+	
 	
 	@JsonBackReference
 	@ManyToOne
@@ -44,11 +46,11 @@ public class Artista implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public Integer getNota() {
+	public String getNota() {
 		return nota;
 	}
 
-	public void setNota(Integer nota) {
+	public void setNota(String nota) {
 		this.nota = nota;
 	}
 	
