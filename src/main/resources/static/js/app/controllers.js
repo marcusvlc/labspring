@@ -504,7 +504,7 @@ app.controller("controlePrincipal",
 		};
 
 		var limparFormulario = function() {
-			$scope.Artista = {"id": 0 ,"nome":"","imagem":"","nota":"0","comentario":"","ehFavorito":false,"ultimaMusicaOuvida":null};
+			$scope.Artista = {id: 0 ,nome:"",imagem:"",nota:"0",comentario:"",ehFavorito:false,ultimaMusicaOuvida:"", albuns:[]};
 			$scope.artistaExisteNoSistema = false;
 
 		};
