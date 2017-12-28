@@ -23,7 +23,7 @@
 
 </head>
 
-{{usuariosCadastrados}}
+{{userDaVez}}
 <main class="container"> 
 <div class="row">
   <div id="elementosdepesquisa">
@@ -148,7 +148,7 @@
 
   <!-- Dropdown Structure -->
   <ul id='dropdown1' class='dropdown-content'>
-    <li ng-repeat="x in artistasCadastrados" ng-click="setArtistaDaVez(x)"><a>{{x.nome}}</a></li>
+    <li ng-repeat="x in userDaVez.artistas" ng-click="setArtistaDaVez(x)"><a>{{x.nome}}</a></li>
   </ul>
 
 </div>

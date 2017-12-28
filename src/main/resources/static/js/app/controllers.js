@@ -17,9 +17,9 @@ app.controller("controlePrincipal",
 		$scope.musicaDaVez = {nome: "", albumNome:"", ano: "", duracao:""};
 		$scope.playlistDaVez = {nome:"", musicas:[]};
 		$scope.usuariosCadastrados = [];
-		var userObject = localStorage.getItem('userData');
-		$scope.user = JSON.parse(localStorage.getItem('userData'));
-		$scope.userDaVez = angular.copy($scope.user);
+//		var userObject = localStorage.getItem('userData');
+		$scope.userDaVez = JSON.parse(localStorage.getItem('userData'));
+//		$scope.userDaVez = angular.copy($scope.user);
 		
 		$scope.atualizarCache = function(Usuario) {
 			localStorage.setItem("userData", JSON.stringify(Usuario));
@@ -258,16 +258,25 @@ app.controller("controlePrincipal",
 				if(Album.nome == "") {
 					Materialize.toast('Alguma informação está incorreta, tente novamente!', 2000)
 				} else {
-					if($scope.albumExisteNoSistema(Album)) {
+					if(false) { // COLOCAR AQUI A VERIFICAÇAO SE O ALBUM EXISTE NO SISTEMA
 						Materialize.toast('O álbum > ' + Album.nome +  ' < já existe no sistema, tente outro!', 2000)
 					} else {
-						if(Album.ano == "" || !Number.isInteger(Album.ano)) {
-							Album.ano = "Data não especificada ou incorreta"
-						}
 						
-						Album.dono = $scope.artistaDaVez.nome;
+//						Album.artista = $scope.artistaDaVez;
+						
+						$http.post("http://localhost:8080/usuarios/" + $scope.userDaVez.id + "/artistas/" + $scope.artistaDaVez.id + "/albuns", Album)
+						.then(function (resposta){
+							console.log("Cadastrou o album corretamente " + resposta);
+		
+							
+						}, function(resposta){
+							console.log("Falha " + resposta);
+							
+						});
+						
 						$scope.artistaDaVez.albuns.push(Album);
-						$scope.albunsCadastrados.push(Album);
+						$scope.atualizarCache($scope.userDaVez);
+
 						$('#modal2').modal('close');
 						Materialize.toast('O álbum > ' + Album.nome +  ' < foi cadastrado com sucesso!', 2000)
 						$scope.resetArtistaDaVez();
@@ -278,14 +287,14 @@ app.controller("controlePrincipal",
 
 
 		$scope.albumExisteNoSistema = function(Album) {
-			var existeAlbum = false;
-			for (var i = $scope.albunsCadastrados.length - 1; i >= 0; i--) {
-				if($scope.albunsCadastrados[i].nome == Album.nome) {
-					existeAlbum = true;
-				}
-			}
-
-			return existeAlbum;
+//			var existeAlbum = false;
+//			for (var i = $scope.albunsCadastrados.length - 1; i >= 0; i--) {
+//				if($scope.albunsCadastrados[i].nome == Album.nome) {
+//					existeAlbum = true;
+//				}
+//			}
+//
+//			return existeAlbum;
 		}
 
 		$scope.musicaExisteNoSistema = function(Musica) {
@@ -367,7 +376,7 @@ app.controller("controlePrincipal",
 		};
 
 		$scope.abreAdicionarAlbum = function() {
-			$scope.Album = {nome: "", imagem: "", ano: "", musicas:[], dono:""};
+			$scope.Album = {nome: "", imagem: "", ano: "", artista:null};
 			$('#modal2').modal('open');
 		}
 
@@ -429,14 +438,6 @@ app.controller("controlePrincipal",
 		$scope.removerArtista = function(Artista) {
 			
 			
-			var keys = Object.keys($scope.userDaVez.artistas);
-			for (var i = 0, len = keys.length; i < len; i++) {
-			  if($scope.userDaVez.artistas[keys[i]] ==  Artista) {
-				  $scope.userDaVez.artistas.splice(i, 1);
-			  }
-			}
-			
-			
 			$http.delete("http://localhost:8080/usuarios/" + $scope.userDaVez.id + "/artistas/" + Artista.id)
 			.then(function (resposta){
 				console.log("Removeu o artista com sucesso " + resposta);
@@ -444,6 +445,13 @@ app.controller("controlePrincipal",
 			}, function(resposta){
 				console.log("Falha " + resposta);
 			});
+			
+			var keys = Object.keys($scope.userDaVez.artistas);
+			for (var i = 0, len = keys.length; i < len; i++) {
+			  if($scope.userDaVez.artistas[keys[i]].nome ==  Artista.nome) {
+				  $scope.userDaVez.artistas.splice(i, 1);
+			  }
+			}
 			
 			
 			$scope.atualizarCache($scope.userDaVez);

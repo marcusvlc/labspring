@@ -1,15 +1,22 @@
 package br.com.lab2spring.ws.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 public class Artista implements Serializable {
@@ -27,6 +34,10 @@ public class Artista implements Serializable {
 	private boolean ehFavorito;
 	private String ultimaMusicaOuvida;
 	
+	@JsonManagedReference
+	@OneToMany(mappedBy="artista")
+	private List<Album> albuns;
+
 	
 	
 	@JsonBackReference
@@ -38,6 +49,20 @@ public class Artista implements Serializable {
 		
 	}
 	
+	
+	
+	public List<Album> getAlbuns() {
+		return albuns;
+	}
+
+
+
+	public void setAlbuns(List<Album> albuns) {
+		this.albuns = albuns;
+	}
+
+
+
 	public Usuario getUsuario() {
 		return usuario;
 	}

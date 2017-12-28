@@ -48,10 +48,10 @@ public class ArtistaController {
 		return new ResponseEntity<>(artistasBuscados, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value = "/usuarios/{id}/artistas/{id}" )
-	public ResponseEntity<Artista> excluirArtista(@PathVariable Long id) {
+	@RequestMapping(method = RequestMethod.DELETE, value = "/usuarios/{id}/artistas/{id_artista}" )
+	public ResponseEntity<Artista> excluirArtista(@PathVariable Long id_artista) {
 		
-		Artista artistaEncontrado = artistaService.buscarPorId(id);
+		Artista artistaEncontrado = artistaService.buscarPorId(id_artista);
 		if (artistaEncontrado==null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

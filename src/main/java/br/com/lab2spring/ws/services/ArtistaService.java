@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.lab2spring.ws.model.Artista;
+import br.com.lab2spring.ws.repository.AlbumRepository;
 import br.com.lab2spring.ws.repository.ArtistaRepository;
 
 @Service
@@ -13,6 +14,10 @@ public class ArtistaService {
 	
 	@Autowired
 	ArtistaRepository artistaRepository;
+	
+	@Autowired
+	AlbumRepository albumRepository;
+	
 	
 	
 	public Artista cadastrar(Artista artista) {
@@ -26,6 +31,11 @@ public class ArtistaService {
 	}
 	
 	public void excluir (Artista artista){
+		
+		for(int i = 0; i < artista.getAlbuns().size(); i++) {
+			albumRepository.delete(artista.getAlbuns().get(i));
+		}
+		
 		artistaRepository.delete(artista);
 	}
 	
