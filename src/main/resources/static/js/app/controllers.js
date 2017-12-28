@@ -4,8 +4,8 @@ app.controller("controlePrincipal",
 
 //		$scope.artistasCadastrados = todoListService.artistasCadastrados;
 //		$scope.playlistsCadastradas = todoListService.playlistsCadastradas;
-//		$scope.albunsCadastrados = todoListService.albunsCadastrados;
-//		$scope.artistasFavoritados = todoListService.artistasFavoritados;
+		$scope.albunsCadastrados = [];
+		$scope.artistasFavoritados = [];
 //	$scope.musicasCadastradas = todoListService.musicasCadastradas;
 
 		$scope.albunsListados = [];
@@ -20,6 +20,8 @@ app.controller("controlePrincipal",
 //		var userObject = localStorage.getItem('userData');
 		$scope.userDaVez = JSON.parse(localStorage.getItem('userData'));
 //		$scope.userDaVez = angular.copy($scope.user);
+		carregarArrays();
+
 		
 		$scope.atualizarCache = function(Usuario) {
 			localStorage.setItem("userData", JSON.stringify(Usuario));
@@ -80,6 +82,21 @@ app.controller("controlePrincipal",
 			} else {
 				alert("Usuario já cadastrado, tente fazer seu registro com outras informações!");
 			}
+		}
+		
+		function carregarArrays(){
+			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
+				if($scope.userDaVez.artistas[i].ehFavorito == true) {
+					$scope.artistasFavoritados.push($scope.userDaVez.artistas[i]);
+				}
+			}
+			
+			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
+				for(j = 0; j < $scope.userDaVez.artistas[i].albuns.length; j++) {
+					$scope.albunsCadastrados.push($scope.userDaVez.artistas[i].albuns[j]);
+				}
+			}
+			
 		}
 		
 		
@@ -267,6 +284,7 @@ app.controller("controlePrincipal",
 						.then(function (resposta){
 							console.log("Cadastrou o album corretamente " + resposta);
 							Album.id = resposta.data.id;
+			
 							
 						}, function(resposta){
 							console.log("Falha " + resposta);
