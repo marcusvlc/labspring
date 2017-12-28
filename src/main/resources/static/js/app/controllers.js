@@ -258,16 +258,15 @@ app.controller("controlePrincipal",
 				if(Album.nome == "") {
 					Materialize.toast('Alguma informação está incorreta, tente novamente!', 2000)
 				} else {
-					if(false) { // COLOCAR AQUI A VERIFICAÇAO SE O ALBUM EXISTE NO SISTEMA
+					if($scope.albumExisteNoSistema(Album)) { // COLOCAR AQUI A VERIFICAÇAO SE O ALBUM EXISTE NO SISTEMA
 						Materialize.toast('O álbum > ' + Album.nome +  ' < já existe no sistema, tente outro!', 2000)
 					} else {
 						
-//						Album.artista = $scope.artistaDaVez;
 						
 						$http.post("http://localhost:8080/usuarios/" + $scope.userDaVez.id + "/artistas/" + $scope.artistaDaVez.id + "/albuns", Album)
 						.then(function (resposta){
 							console.log("Cadastrou o album corretamente " + resposta);
-		
+							Album.id = resposta.data.id;
 							
 						}, function(resposta){
 							console.log("Falha " + resposta);
@@ -287,14 +286,18 @@ app.controller("controlePrincipal",
 
 
 		$scope.albumExisteNoSistema = function(Album) {
-//			var existeAlbum = false;
-//			for (var i = $scope.albunsCadastrados.length - 1; i >= 0; i--) {
-//				if($scope.albunsCadastrados[i].nome == Album.nome) {
-//					existeAlbum = true;
-//				}
-//			}
-//
-//			return existeAlbum;
+			var existe = false;
+			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
+				for(j = 0; j < $scope.userDaVez.artistas[i].albuns.length; j++) {
+					if(Album.nome == $scope.userDaVez.artistas[i].albuns[j].nome) {
+						existe = true;
+						break;
+					}
+				}
+			}
+			
+			return existe;
+			
 		}
 
 		$scope.musicaExisteNoSistema = function(Musica) {
