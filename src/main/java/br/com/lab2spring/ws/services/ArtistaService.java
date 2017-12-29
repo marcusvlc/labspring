@@ -16,7 +16,7 @@ public class ArtistaService {
 	ArtistaRepository artistaRepository;
 	
 	@Autowired
-	AlbumRepository albumRepository;
+	AlbumService albumService;
 	
 	
 	
@@ -33,7 +33,7 @@ public class ArtistaService {
 	public void excluir (Artista artista){
 		
 		for(int i = 0; i < artista.getAlbuns().size(); i++) {
-			albumRepository.delete(artista.getAlbuns().get(i));
+			albumService.excluir(artista.getAlbuns().get(i));
 		}
 		
 		artistaRepository.delete(artista);

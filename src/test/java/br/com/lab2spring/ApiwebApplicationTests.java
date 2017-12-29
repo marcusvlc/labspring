@@ -1,4 +1,4 @@
-package br.com.fabricadeprogramador;
+package br.com.lab2spring;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

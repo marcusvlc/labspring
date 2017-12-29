@@ -6,7 +6,7 @@ app.controller("controlePrincipal",
 //		$scope.playlistsCadastradas = todoListService.playlistsCadastradas;
 		$scope.albunsCadastrados = [];
 		$scope.artistasFavoritados = [];
-//	$scope.musicasCadastradas = todoListService.musicasCadastradas;
+		$scope.musicasCadastradas = [];
 
 		$scope.albunsListados = [];
 		$scope.musicasListadas = [];
@@ -85,17 +85,31 @@ app.controller("controlePrincipal",
 		}
 		
 		function carregarArrays(){
+			$scope.albunsCadastrados = [];
+			$scope.artistasFavoritados = [];
+			$scope.musicasCadastradas = [];
+			
+			// Carrega o array com todos os artistas favoritados
 			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
 				if($scope.userDaVez.artistas[i].ehFavorito == true) {
 					$scope.artistasFavoritados.push($scope.userDaVez.artistas[i]);
 				}
 			}
 			
+			// Carrega o array com todos os albuns do sistema
 			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
 				for(j = 0; j < $scope.userDaVez.artistas[i].albuns.length; j++) {
 					$scope.albunsCadastrados.push($scope.userDaVez.artistas[i].albuns[j]);
 				}
 			}
+			
+//			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
+//				for(j = 0; j < $scope.userDaVez.artistas[i].albuns.length; j++) {
+//					for(k = 0; k < $scope.userDaVez.artistas[i].albuns[j].musicas.length; k++) {
+//						$scope.musicasCadastradas.push($scope.userDaVez.artistas[i].albuns[j].musicas[k]);
+//					}
+//				}
+//			}
 			
 		}
 		
@@ -243,32 +257,59 @@ app.controller("controlePrincipal",
 		}
 
 		$scope.resetMusicaDaVez = function() {
-			$scope.musicaDaVez = {nome: "", albumNome:"", ano: "", duracao:""};
+			$scope.musicaDaVez = {nome: "", ano: "", duracao:""};
 
 		}
 
 		$scope.resetAlbumDaVez = function() {
-			$scope.albumDaVez = {nome: "", imagem: "", ano: "", musicas:[], dono:""};
+			$scope.albumDaVez = {nome: "", imagem: "", ano: "", musicas:[]};
 
 		}
 
 		$scope.addMusica = function(Musica) {
-			if(Musica.nome == "" || Musica.ano == "" || Musica.duracao == "" || $scope.albumDaVez.nome == "" ) {
+			if(Musica.nome == "" || Musica.ano == "" || Musica.duracao == "") {
 				Materialize.toast('Alguma informação está incorreta, tente novamente!', 2000)
 			} else {
-				if($scope.musicaExisteNoSistema(Musica)) {
+				if(false) { // IMPLEMENTAR musicaExisteNoSistema
 					Materialize.toast('A música > ' + Musica.nome + ' < já existe no sistema, tente cadastrar outra!', 2000)
 				} else {
-
+					
+					$scope.buscarArtistaPorAlbum($scope.albumDaVez);
+					
+					console.log($scope.albumDaVez.musicas);
+					console.log($scope.artistaDaVez.nome);
+					
+					$http.post("http://localhost:8080/usuarios/" + $scope.userDaVez.id + "/artistas/" + $scope.artistaDaVez.id + "/albuns/" + $scope.albumDaVez.id + "/musicas", Musica)
+					.then(function (resposta){
+						console.log("Cadastrou a musica corretamente " + resposta);
+						Musica.id = resposta.data.id;
+		
+						
+					}, function(resposta){
+						console.log("Falha " + resposta);
+						
+					});
 				$scope.albumDaVez.musicas.push(Musica);
-				Musica.albumNome = $scope.albumDaVez.nome;
-				$scope.musicasCadastradas.push(Musica);
+				$scope.atualizarCache($scope.userDaVez);
 				$('#modal4').modal('close');
 				Materialize.toast('A música > ' + Musica.nome +  ' < foi adicionada ao Álbum: > ' + $scope.albumDaVez.nome + ' < com sucesso!', 2000)
 				$scope.resetAlbumDaVez();
+				$scope.resetArtistaDaVez();
 				}
 
 			}
+		}
+		
+		$scope.buscarArtistaPorAlbum = function (Album) {
+			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
+				for(j = 0; j < $scope.userDaVez.artistas[i].albuns; j++) {
+					if($scope.userDaVez.artistas[i].albuns[j].nome == Album.nome) {
+						$scope.artistaDaVez = $scope.userDaVez.artistas[i];
+						break;
+					}
+				}
+			}
+			
 		}
 
 		$scope.addAlbum = function(Album) {
@@ -293,7 +334,7 @@ app.controller("controlePrincipal",
 						
 						$scope.artistaDaVez.albuns.push(Album);
 						$scope.atualizarCache($scope.userDaVez);
-
+						carregarArrays();
 						$('#modal2').modal('close');
 						Materialize.toast('O álbum > ' + Album.nome +  ' < foi cadastrado com sucesso!', 2000)
 						$scope.resetArtistaDaVez();
@@ -397,7 +438,7 @@ app.controller("controlePrincipal",
 		};
 
 		$scope.abreAdicionarAlbum = function() {
-			$scope.Album = {nome: "", imagem: "", ano: "", artista:null};
+			$scope.Album = {nome: "", imagem: "", ano: "", artista:null, musicas:[]};
 			$('#modal2').modal('open');
 		}
 

@@ -11,6 +11,9 @@ public class AlbumService {
 	
 	@Autowired
 	AlbumRepository albumRepository;
+	
+	@Autowired
+	MusicaService musicaService;
 
 	public Album cadastrar(Album album) {
 		return albumRepository.save(album);
@@ -21,6 +24,10 @@ public class AlbumService {
 	}
 	
 	public void excluir(Album album) {
+		for(int i = 0; i < album.getMusicas().size(); i++) {
+			musicaService.remover(album.getMusicas().get(i));
+		}
+		
 		albumRepository.delete(album);
 	}
 
