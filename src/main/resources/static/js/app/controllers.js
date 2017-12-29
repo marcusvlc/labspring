@@ -13,7 +13,7 @@ app.controller("controlePrincipal",
 		$scope.editando = false;
 		$scope.artistaDaVez = {nome: "", imagem: "" , comentario: "", ehFavorito: false, nota:"0", ultimaMusicaOuvida:""};
 		$scope.albumDaVez = {nome: "", imagem: "", ano: "", musicas:[], dono:""};
-		$scope.musicaDaVez = {nome: "", albumNome:"", ano: "", duracao:""};
+		$scope.musicaDaVez = {nome: "", albumNome:"", ano: "", duracao:"", idplaylist:0};
 		$scope.playlistDaVez = {nome:"", musicas:[]};
 		$scope.usuariosCadastrados = [];
 //		var userObject = localStorage.getItem('userData');
@@ -127,6 +127,19 @@ app.controller("controlePrincipal",
 						Materialize.toast('A música ' + Musica.nome + ' foi removida com sucesso!', 2000)
 					}
 				}
+				
+				
+				$http.post("http://localhost:8080/usuarios/"+ $scope.userDaVez.id + "/playlists/" + Playlist.id + "/deletarmusicadaplaylist", Musica )
+				.then(function (resposta){
+					console.log("Deletou a musica da playlist com sucesso" + resposta)
+					
+				}, function(resposta){
+					console.log("Falha " + resposta);
+					
+				});
+				
+				$scope.atualizarCache($scope.userDaVez);
+				carregarArrays();
 			}
 		}
 
@@ -138,6 +151,8 @@ app.controller("controlePrincipal",
 				$http.post("http://localhost:8080/usuarios/"+ $scope.userDaVez.id + "/playlists/" + $scope.playlistDaVez.id + "/musicadaplaylist", $scope.musicaDaVez )
 				.then(function (resposta){
 					console.log("Cadastrou a musica na playlist com sucesso" + resposta)
+					$scope.musicaDaVez.idplaylist = resposta.data.id;
+					console.log($scope.musicaDaVez.idplaylist);
 					
 				}, function(resposta){
 					console.log("Falha " + resposta);
@@ -307,7 +322,7 @@ app.controller("controlePrincipal",
 		}
 
 		$scope.resetMusicaDaVez = function() {
-			$scope.musicaDaVez = {nome: "", ano: "", duracao:""};
+			$scope.musicaDaVez = {nome: "", ano: "", duracao:"", idplaylist:0};
 
 		}
 

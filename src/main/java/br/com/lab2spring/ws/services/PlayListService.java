@@ -11,6 +11,9 @@ public class PlayListService {
 	
 	@Autowired
 	PlayListRepository playListRepository;
+	
+	@Autowired
+	MusicaDaPlaylistService musicaDaPlaylistService;
 
 	public PlayList cadastrar(PlayList playlist) {
 		return playListRepository.save(playlist);
@@ -21,6 +24,11 @@ public class PlayListService {
 	}
 	
 	public void excluir(PlayList playlist) {
+		
+		for(int i = 0; i < playlist.getMusicas().size(); i++) {
+			musicaDaPlaylistService.remover(playlist.getMusicas().get(i));
+		}
+		
 		playListRepository.delete(playlist);
 	}
 

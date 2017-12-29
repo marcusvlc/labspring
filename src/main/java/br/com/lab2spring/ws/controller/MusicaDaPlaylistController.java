@@ -27,7 +27,7 @@ public class MusicaDaPlaylistController {
 	MusicaDaPlaylistService musicaDaPlaylistService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/usuarios/{id}/playlists/{id_playlist}/musicadaplaylist", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MusicaDaPlaylist> cadastrarAlbum(@RequestBody MusicaDaPlaylist musicaDaPlaylist, @PathVariable Long id_playlist) {
+	public ResponseEntity<MusicaDaPlaylist> cadastrarMusicaNaPlaylist(@RequestBody MusicaDaPlaylist musicaDaPlaylist, @PathVariable Long id_playlist) {
 		
 		PlayList playlist = playListService.buscarPorId(id_playlist);
 		musicaDaPlaylist.setPlaylist(playlist);
@@ -36,6 +36,35 @@ public class MusicaDaPlaylistController {
 
 		
 		return new ResponseEntity<>(musicaCadastrada, HttpStatus.CREATED);
+	}
+	
+//	@RequestMapping(method = RequestMethod.DELETE, value = "/usuarios/{id}/playlists/{id_playlist}/musicadaplaylist/{id_musica}")
+//	public ResponseEntity<MusicaDaPlaylist> removerMusicaDaPlaylist(@PathVariable Long id_musica) {
+//		
+//		MusicaDaPlaylist musicaEncontrada = musicaDaPlaylistService.buscarPorId(id_musica);
+//		if (musicaEncontrada==null){
+//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//		}
+//		
+//		musicaDaPlaylistService.remover(musicaEncontrada);
+//		return new ResponseEntity<>( HttpStatus.OK);
+//	}
+	
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/usuarios/{id}/playlists/{id_playlist}/deletarmusicadaplaylist", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MusicaDaPlaylist> deletarMusica(@RequestBody MusicaDaPlaylist musicaDaPlaylist, @PathVariable Long id_playlist) {
+		
+		
+		MusicaDaPlaylist musicaDeletada = musicaDaPlaylistService.buscarPorNome(musicaDaPlaylist.getNome());
+		
+		if (musicaDeletada==null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		musicaDaPlaylistService.remover(musicaDeletada);
+		
+		
+		return new ResponseEntity<>(musicaDeletada, HttpStatus.CREATED);
 	}
 
 }

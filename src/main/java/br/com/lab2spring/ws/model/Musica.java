@@ -22,6 +22,7 @@ public class Musica implements Serializable {
 	private String nome;
 	private Integer ano;
 	private Integer duracao;
+	private Long idplaylist;
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="Album_id")
@@ -32,6 +33,17 @@ public class Musica implements Serializable {
 		
 	}
 	
+	
+	public Long getIdplaylist() {
+		return idplaylist;
+	}
+
+
+	public void setIdplaylist(Long idplaylist) {
+		this.idplaylist = idplaylist;
+	}
+
+
 	public Long getId() {
 		return id;
 	}

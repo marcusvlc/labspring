@@ -15,5 +15,17 @@ public class MusicaDaPlaylistService {
 	public MusicaDaPlaylist cadastrar(MusicaDaPlaylist musica) {
 		return musicaDaPlaylistRepository.save(musica);
 	}
+	
+	public void remover(MusicaDaPlaylist musica) {
+		musicaDaPlaylistRepository.delete(musica);
+	}
+	
+	public MusicaDaPlaylist buscarPorId(Long id) {
+		return musicaDaPlaylistRepository.findOne(id);
+	}
+	
+	public MusicaDaPlaylist buscarPorNome(String nome) {
+		return musicaDaPlaylistRepository.buscarPorNome(nome);
+	}
 
 }
