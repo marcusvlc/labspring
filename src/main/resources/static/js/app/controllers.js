@@ -2,8 +2,7 @@ app.controller("controlePrincipal",
 
 	function($scope, $http, todoListService) {
 
-//		$scope.artistasCadastrados = todoListService.artistasCadastrados;
-//		$scope.playlistsCadastradas = todoListService.playlistsCadastradas;
+		$scope.playlistsCadastradas = [];
 		$scope.albunsCadastrados = [];
 		$scope.artistasFavoritados = [];
 		$scope.musicasCadastradas = [];
@@ -88,6 +87,7 @@ app.controller("controlePrincipal",
 			$scope.albunsCadastrados = [];
 			$scope.artistasFavoritados = [];
 			$scope.musicasCadastradas = [];
+			$scope.playlistsCadastradas = [];
 			
 			// Carrega o array com todos os artistas favoritados
 			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
@@ -102,7 +102,7 @@ app.controller("controlePrincipal",
 					$scope.albunsCadastrados.push($scope.userDaVez.artistas[i].albuns[j]);
 				}
 			}
-			
+			// Carrega o array com todas as musicas do sistema
 			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
 				for(j = 0; j < $scope.userDaVez.artistas[i].albuns.length; j++) {
 					for(k = 0; k < $scope.userDaVez.artistas[i].albuns[j].musicas.length; k++) {
@@ -110,6 +110,8 @@ app.controller("controlePrincipal",
 					}
 				}
 			}
+			
+			$scope.playlistsCadastradas = $scope.userDaVez.playlists;
 			
 		}
 		
@@ -132,6 +134,16 @@ app.controller("controlePrincipal",
 			if(musicaExisteNaPlaylist($scope.playlistDaVez, $scope.musicaDaVez)) {
 				Materialize.toast('A música ' + $scope.musicaDaVez.nome + ' já existe nessa playlist, tente outra!', 2000)
 			} else {
+				
+				$http.post("http://localhost:8080/usuarios/"+ $scope.userDaVez.id + "/playlists/" + $scope.playlistDaVez.id + "/musicadaplaylist", $scope.musicaDaVez )
+				.then(function (resposta){
+					console.log("Cadastrou a musica na playlist com sucesso" + resposta)
+					
+				}, function(resposta){
+					console.log("Falha " + resposta);
+					
+				});
+				
 				$scope.playlistDaVez.musicas.push($scope.musicaDaVez);
 				Materialize.toast('A música ' + $scope.musicaDaVez.nome + ' foi adicionada com sucesso na sua playlist!', 2000)
 				$scope.resetMusicaDaVez();
@@ -155,7 +167,20 @@ app.controller("controlePrincipal",
 			if(checaPlayListNoSistema(Playlist)) {
 				Materialize.toast('A playlist ' + Playlist.nome + ' já existe no sistema, tente cadastrar outra!', 2000)
 			} else {
-				$scope.playlistsCadastradas.push(Playlist);
+				
+				
+				$http.post("http://localhost:8080/usuarios/"+ $scope.userDaVez.id + "/playlists", Playlist)
+				.then(function (resposta){
+					console.log("Cadastrou a playlist com sucesso" + resposta)
+					Playlist.id = resposta.data.id;
+					
+				}, function(resposta){
+					console.log("Falha " + resposta);
+					
+				});
+				
+				$scope.userDaVez.playlists.push(Playlist);
+				$scope.atualizarCache($scope.userDaVez);
 				$('#modalplaylists').modal('close');
 				Materialize.toast('A playlist ' + Playlist.nome + ' foi cadastrada com sucesso! Agora é só adicionar músicas!', 2000)
 			}
@@ -165,12 +190,22 @@ app.controller("controlePrincipal",
 			var click = confirm("Deseja excluir a playlist " + Playlist.nome + "?");
 
 			if(click) {
-				for (var i = $scope.playlistsCadastradas.length - 1; i >= 0; i--) {
-				if($scope.playlistsCadastradas[i] == Playlist) {
-					$scope.playlistsCadastradas.splice(i, 1);
+				for (var i = $scope.userDaVez.playlists.length - 1; i >= 0; i--) {
+				if($scope.userDaVez.playlists[i] == Playlist) {
+					$scope.userDaVez.playlists.splice(i, 1);
 					Materialize.toast('A playlist ' + Playlist.nome + ' foi removida com sucesso!', 2000)
 					}
 				}
+				
+				$http.delete("http://localhost:8080/usuarios/" + $scope.userDaVez.id + "/playlists/" + Playlist.id)
+				.then(function (resposta){
+					console.log("Removeu a playlist com sucesso " + resposta);
+					
+				}, function(resposta){
+					console.log("Falha " + resposta);
+				});
+				
+				$scope.atualizarCache($scope.userDaVez);
 
 			}
 
@@ -285,7 +320,7 @@ app.controller("controlePrincipal",
 			if(Musica.nome == "" || Musica.ano == "" || Musica.duracao == "") {
 				Materialize.toast('Alguma informação está incorreta, tente novamente!', 2000)
 			} else {
-				if(false) { // IMPLEMENTAR musicaExisteNoSistema
+				if($scope.musicaExisteNoSistema(Musica)) {
 					Materialize.toast('A música > ' + Musica.nome + ' < já existe no sistema, tente cadastrar outra!', 2000)
 				} else {
 					
@@ -306,6 +341,7 @@ app.controller("controlePrincipal",
 					});
 				$scope.albumDaVez.musicas.push(Musica);
 				$scope.atualizarCache($scope.userDaVez);
+				carregarArrays();
 				$('#modal4').modal('close');
 				Materialize.toast('A música > ' + Musica.nome +  ' < foi adicionada ao Álbum: > ' + $scope.albumDaVez.nome + ' < com sucesso!', 2000)
 				$scope.resetAlbumDaVez();
@@ -331,7 +367,7 @@ app.controller("controlePrincipal",
 				if(Album.nome == "") {
 					Materialize.toast('Alguma informação está incorreta, tente novamente!', 2000)
 				} else {
-					if($scope.albumExisteNoSistema(Album)) { // COLOCAR AQUI A VERIFICAÇAO SE O ALBUM EXISTE NO SISTEMA
+					if($scope.albumExisteNoSistema(Album)) { 
 						Materialize.toast('O álbum > ' + Album.nome +  ' < já existe no sistema, tente outro!', 2000)
 					} else {
 						

@@ -1,18 +1,21 @@
 package br.com.lab2spring.ws.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Musica implements Serializable {
+public class PlayList implements Serializable{
 	
 	@Transient
 	private static final long serialVersionUID = 1L;
@@ -20,50 +23,61 @@ public class Musica implements Serializable {
 	@GeneratedValue
 	private Long id;
 	private String nome;
-	private Integer ano;
-	private Integer duracao;
+	
+	
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name="Album_id")
-	private Album album;
-
+	@JoinColumn(name="Usuario_id")
+	private Usuario usuario;
 	
-	public Musica() {
+	@JsonManagedReference
+	@OneToMany(mappedBy="playlist")
+	private List<MusicaDaPlaylist> musicas;
+	
+	
+	public PlayList() {
 		
 	}
 	
+
+	public List<MusicaDaPlaylist> getMusicas() {
+		return musicas;
+	}
+
+
+	public void setMusicas(List<MusicaDaPlaylist> musicas) {
+		this.musicas = musicas;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
+
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+
 	public String getNome() {
 		return nome;
 	}
+
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Integer getAno() {
-		return ano;
-	}
-	public void setAno(Integer ano) {
-		this.ano = ano;
-	}
-	public Integer getDuracao() {
-		return duracao;
-	}
-	public void setDuracao(Integer duracao) {
-		this.duracao = duracao;
-	}
-	public Album getAlbum() {
-		return album;
-	}
-	public void setAlbum(Album album) {
-		this.album = album;
-	}
-	
-	
-	
 
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	
 }

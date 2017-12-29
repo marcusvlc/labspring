@@ -51,6 +51,8 @@ public class Artista implements Serializable {
 	
 	
 	
+	
+	
 	public List<Album> getAlbuns() {
 		return albuns;
 	}

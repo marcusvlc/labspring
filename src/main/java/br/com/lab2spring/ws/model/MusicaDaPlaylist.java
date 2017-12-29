@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class Musica implements Serializable {
+public class MusicaDaPlaylist implements Serializable {
 	
 	@Transient
 	private static final long serialVersionUID = 1L;
@@ -22,47 +22,55 @@ public class Musica implements Serializable {
 	private String nome;
 	private Integer ano;
 	private Integer duracao;
+	
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name="Album_id")
-	private Album album;
-
+	@JoinColumn(name="PlayList_id")
+	private PlayList playlist;
 	
-	public Musica() {
+	public MusicaDaPlaylist() {
 		
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public Integer getAno() {
 		return ano;
 	}
+
 	public void setAno(Integer ano) {
 		this.ano = ano;
 	}
+
 	public Integer getDuracao() {
 		return duracao;
 	}
+
 	public void setDuracao(Integer duracao) {
 		this.duracao = duracao;
 	}
-	public Album getAlbum() {
-		return album;
+
+	public PlayList getPlaylist() {
+		return playlist;
 	}
-	public void setAlbum(Album album) {
-		this.album = album;
+
+	public void setPlaylist(PlayList playlist) {
+		this.playlist = playlist;
 	}
-	
 	
 	
 
