@@ -12,7 +12,7 @@ app.controller("controlePrincipal",
 		$scope.musicasListadas = [];
 		$scope.artistaExisteNoSistema = false;
 		$scope.editando = false;
-		$scope.artistaDaVez = {nome: "", imagem: "" , comentario: "", ehFavorito: false, nota:"0", ultimaMusica:""};
+		$scope.artistaDaVez = {nome: "", imagem: "" , comentario: "", ehFavorito: false, nota:"0", ultimaMusicaOuvida:""};
 		$scope.albumDaVez = {nome: "", imagem: "", ano: "", musicas:[], dono:""};
 		$scope.musicaDaVez = {nome: "", albumNome:"", ano: "", duracao:""};
 		$scope.playlistDaVez = {nome:"", musicas:[]};
@@ -103,13 +103,13 @@ app.controller("controlePrincipal",
 				}
 			}
 			
-//			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
-//				for(j = 0; j < $scope.userDaVez.artistas[i].albuns.length; j++) {
-//					for(k = 0; k < $scope.userDaVez.artistas[i].albuns[j].musicas.length; k++) {
-//						$scope.musicasCadastradas.push($scope.userDaVez.artistas[i].albuns[j].musicas[k]);
-//					}
-//				}
-//			}
+			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
+				for(j = 0; j < $scope.userDaVez.artistas[i].albuns.length; j++) {
+					for(k = 0; k < $scope.userDaVez.artistas[i].albuns[j].musicas.length; k++) {
+						$scope.musicasCadastradas.push($scope.userDaVez.artistas[i].albuns[j].musicas[k]);
+					}
+				}
+			}
 			
 		}
 		
@@ -205,8 +205,8 @@ app.controller("controlePrincipal",
 
 		$scope.abrirModalMusica = function(Artista) {
 			$scope.musicasListadas = [];
+			$scope.artistaDaVez = Artista;
 
-			$scope.resetArtistaDaVez();
 			$scope.resetMusicaDaVez();
 
 
@@ -216,13 +216,28 @@ app.controller("controlePrincipal",
 				}
 			}
 
-			$scope.artistaDaVez = Artista;
+
 			$('#modalmusica').modal('open');
 		}
 
 		$scope.salvarUltimaMusicaOuvida = function() {
 			if($scope.musicaDaVez.nome != "") {
-				$scope.artistaDaVez.ultimaMusica = $scope.musicaDaVez.nome;
+				
+				$scope.artistaDaVez.ultimaMusicaOuvida = $scope.musicaDaVez.nome;
+				
+				console.log($scope.artistaDaVez);
+
+				$http.post("http://localhost:8080/usuarios/"+ $scope.userDaVez.id + "/artistas", $scope.artistaDaVez)
+				.then(function (resposta){
+					console.log("Alterou com sucesso" + resposta)
+					
+				}, function(resposta){
+					console.log("Falha " + resposta);
+					
+				});
+				
+				$scope.atualizarCache($scope.userDaVez);
+				
 				Materialize.toast('A música: > ' + $scope.musicaDaVez.nome + ' < agora é sua última música ouvida do artista ' + $scope.artistaDaVez.nome, 2000)
 				$('#modalmusica').modal('close');
 			} else {
@@ -248,7 +263,7 @@ app.controller("controlePrincipal",
 		}
 
 		$scope.resetArtistaDaVez = function() {
-			$scope.artistaDaVez = {nome: "", imagem: "" , comentario: "", ehFavorito: false, albuns:[],  nota:"0", ultimaMusica:""};
+			$scope.artistaDaVez = {nome: "", imagem: "" , comentario: "", ehFavorito: false, albuns:[],  nota:"0", ultimaMusicaOuvida:""};
 
 		}
 
