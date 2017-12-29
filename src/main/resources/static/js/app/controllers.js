@@ -25,14 +25,6 @@ app.controller("controlePrincipal",
 			localStorage.setItem("userData", JSON.stringify(Usuario));
 		}
 		
-		function sleep(milliseconds) {
-			  var start = new Date().getTime();
-			  for (var i = 0; i < 1e7; i++) {
-			    if ((new Date().getTime() - start) > milliseconds){
-			      break;
-			    }
-			  }
-			}
 		
 		$http({method:'GET', url:'http://localhost:8080/usuarios'})
 			.then(function(resposta){
@@ -88,7 +80,8 @@ app.controller("controlePrincipal",
 					
 				});
 			} else {
-				alert("Usuario já cadastrado, tente fazer seu registro com outras informações!");
+				alert("Já existe um usuário cadastrado com esse email! Tente outro!");
+				window.location.href = "http://localhost:8080/login";
 			}
 		}
 		
