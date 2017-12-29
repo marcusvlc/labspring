@@ -1,10 +1,11 @@
 <link rel="stylesheet" type="text/css" href="css/estilo.css">
 
-<div id="kappa">
-   <nav>
+<div id="kappa" ng-app="sistema">
+   <nav ng-controller="controlePrincipal">
     <div class="nav-wrapper">
       <a  href="#" class="brand-logo"><!-- <img id="logo" src="https://cdn.pixabay.com/photo/2013/07/13/10/29/icon-157355_640.png" width="60" height="60"> -->Music&Music</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
+      	<li><a>Você está logado como: {{userDaVez.login}}</a></li>
         <li><a ui-sref="home">Home</a></li>
         <li><a ui-sref="playlists">Playlists</a></li>
         <li><a ui-sref="favoritos">Favoritos</a></li>

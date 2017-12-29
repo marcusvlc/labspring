@@ -20,12 +20,19 @@ app.controller("controlePrincipal",
 		$scope.userDaVez = JSON.parse(localStorage.getItem('userData'));
 //		$scope.userDaVez = angular.copy($scope.user);
 		carregarArrays();
-
 		
 		$scope.atualizarCache = function(Usuario) {
 			localStorage.setItem("userData", JSON.stringify(Usuario));
 		}
 		
+		function sleep(milliseconds) {
+			  var start = new Date().getTime();
+			  for (var i = 0; i < 1e7; i++) {
+			    if ((new Date().getTime() - start) > milliseconds){
+			      break;
+			    }
+			  }
+			}
 		
 		$http({method:'GET', url:'http://localhost:8080/usuarios'})
 			.then(function(resposta){
@@ -44,12 +51,14 @@ app.controller("controlePrincipal",
 			.then(function (resposta){
 				console.log("Sucesso " + resposta);
 				localStorage.setItem("userData", JSON.stringify(resposta.data));
-				
+				// COLOCAR UM WAIT DE 2 SEGUNDOS AQUI.
 				window.location.href = "http://localhost:8080/index";
 				
 				
 			}, function(resposta){
 				console.log("Falha " + resposta);
+				alert("Algum dado está incorreto, tente novamente!");
+
 				
 			});
 			
@@ -70,7 +79,7 @@ app.controller("controlePrincipal",
 				$http.post("http://localhost:8080/usuarios", Usuario)
 				.then(function (resposta){
 					console.log("Registrou corretamente " + resposta);
-					alert("Registrado com sucesso!");
+					alert("Registro feito com sucesso! Use seu email e senha para logar!");
 					window.location.href = "http://localhost:8080/login";
 					
 					
