@@ -91,29 +91,33 @@ app.controller("controlePrincipal",
 			$scope.musicasCadastradas = [];
 			$scope.playlistsCadastradas = [];
 			
-			// Carrega o array com todos os artistas favoritados
-			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
-				if($scope.userDaVez.artistas[i].ehFavorito == true) {
-					$scope.artistasFavoritados.push($scope.userDaVez.artistas[i]);
-				}
-			}
 			
-			// Carrega o array com todos os albuns do sistema
-			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
-				for(j = 0; j < $scope.userDaVez.artistas[i].albuns.length; j++) {
-					$scope.albunsCadastrados.push($scope.userDaVez.artistas[i].albuns[j]);
-				}
-			}
-			// Carrega o array com todas as musicas do sistema
-			for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
-				for(j = 0; j < $scope.userDaVez.artistas[i].albuns.length; j++) {
-					for(k = 0; k < $scope.userDaVez.artistas[i].albuns[j].musicas.length; k++) {
-						$scope.musicasCadastradas.push($scope.userDaVez.artistas[i].albuns[j].musicas[k]);
+			if($scope.userDaVez != null ) {
+				// Carrega o array com todos os artistas favoritados
+				for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
+					if($scope.userDaVez.artistas[i].ehFavorito == true) {
+						$scope.artistasFavoritados.push($scope.userDaVez.artistas[i]);
 					}
 				}
+				
+				// Carrega o array com todos os albuns do sistema
+				for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
+					for(j = 0; j < $scope.userDaVez.artistas[i].albuns.length; j++) {
+						$scope.albunsCadastrados.push($scope.userDaVez.artistas[i].albuns[j]);
+					}
+				}
+				// Carrega o array com todas as musicas do sistema
+				for(i = 0; i < $scope.userDaVez.artistas.length; i++) {
+					for(j = 0; j < $scope.userDaVez.artistas[i].albuns.length; j++) {
+						for(k = 0; k < $scope.userDaVez.artistas[i].albuns[j].musicas.length; k++) {
+							$scope.musicasCadastradas.push($scope.userDaVez.artistas[i].albuns[j].musicas[k]);
+						}
+					}
+				}
+				
+				$scope.playlistsCadastradas = $scope.userDaVez.playlists;
 			}
-			
-			$scope.playlistsCadastradas = $scope.userDaVez.playlists;
+
 			
 		}
 		
