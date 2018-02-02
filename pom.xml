@@ -53,11 +53,11 @@
             <artifactId>h2</artifactId>
         </dependency>
         
-		 <dependency>
+		<dependency>
 		  <groupId>org.postgresql</groupId>
 		  <artifactId>postgresql</artifactId>
-		  <version>9.4.1208</version>
-		</dependency>
+		  <version>9.4-1206-jdbc42</version>
+		</dependency> 
 		
 <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
 <dependency>
