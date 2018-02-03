@@ -6,20 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class TelasController {
 	
-	@RequestMapping("/")
-	public String irParaLogin() {
-		return "login";
-	}
-	
-	@RequestMapping("/index")
-	public String irParaIndex() {
-		return "index";
-	}
-	
-	@RequestMapping("/registrar")
-	public String irParaRegistro() {
-		return "registrar";
-	}
+
 	
 
 }

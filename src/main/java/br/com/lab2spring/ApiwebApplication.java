@@ -3,6 +3,8 @@ package br.com.lab2spring;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -13,11 +15,27 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableSwagger2
+@Controller
 @SpringBootApplication
 public class ApiwebApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiwebApplication.class, args);
+	}
+	
+	@RequestMapping("/login")
+	public String irParaLogin() {
+		return "login";
+	}
+	
+	@RequestMapping("/index")
+	public String irParaIndex() {
+		return "index";
+	}
+	
+	@RequestMapping("/registrar")
+	public String irParaRegistro() {
+		return "registrar";
 	}
 	
 	@Bean
